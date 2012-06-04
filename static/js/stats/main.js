@@ -36,6 +36,15 @@ function init() {
 			$(ui.tab).trigger('click');
 		}
 	});
+	
+	$("#filters").load("proxy/search/ui" + window.location.search, {
+		"v.template" : "ui/filters",
+		"facet" : "off",
+		"q" : "*",
+		"rows" : 0,
+	}, function() {
+		$(this).show($(this).has(".filter"));
+	});
 }
 
 function initMainStats(group_field) { 
