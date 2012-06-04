@@ -52,7 +52,7 @@ Array.prototype.clean = function() {
 
 
 function getListUrl() {
-	return "proxy/list/generic?" + getQueryString(); 
+	return "proxy/search/list/generic?" + getQueryString(); 
 }
 
 function makeUiHref(fq) {
@@ -60,7 +60,7 @@ function makeUiHref(fq) {
 		q : "*",
 		fq : fq.clean() 
 	};
-	return "../ui?" + $.param(params) + "&" + getQueryString();
+	return "proxy/search/ui?" + $.param(params) + "&" + getQueryString();
 }
 
 function getQueryString() {
