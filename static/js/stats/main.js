@@ -96,10 +96,10 @@ $.fn.setLinksToNextTab = function(next_tab) {
 
 
 function linkchecker_applyfilter(linkchecker) {
-	$("#filters .filter").each(function(el) {
-		var name = $(".name", el).text().trim();
-		var val = $(".value", el).text().trim();
-
+	$("#filters .filter").each(function() {
+		var name = $(".name", this).text().trim();
+		var val = $(".value", this).text().trim();
+		
 		if (name == "allocator") {
 			var symbol = val.split(" ")[0];
 			linkchecker.table.filterRows(function() {
