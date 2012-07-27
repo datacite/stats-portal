@@ -8,33 +8,7 @@ function init() {
 	newStats("Allocators", initMainStats("allocator_facet"));
 	newStats("Datacentres", initMainStats("datacentre_facet"));
 	newStats("Prefixes", initMainStats("prefix"));
-	
-	var month = newStats("Month", function(month) {
-		month.table.addColGroup("DOI Registrations", 2)
-		month.table.addDateCol("per Month", "created", "%b %y", "+1MONTH");
-		month.table.addAggregationCol("aggregated", 1);
-		month.table.addColGroup("Metadata Uploads", 2)
-		month.table.addDateCol("per Month", "uploaded", "%b %y", "+1MONTH");
-		month.table.addAggregationCol("aggregated", 3);
-		month.table.removeLeadingRowsWithZeros();
-	});
 
-	var day = newStats("Day", function(day) {
-		day.table.addColGroup("DOI Registrations", 2)
-		day.table.addDateCol("per Month", "created", "%d %b %y", "+1DAY");
-		day.table.addAggregationCol("aggregated", 1);
-		day.table.addColGroup("Metadata Uploads", 2)
-		day.table.addDateCol("per Month", "uploaded", "%d %b %y", "+1DAY");
-		day.table.addAggregationCol("aggregated", 3);
-		day.table.removeLeadingRowsWithZeros();
-		day.table.hide();
-	});
-
-	var res = newStats("ResourceType", function(res) {
-		res.table.addFacetCol("Count", "resourceType_facet");
-		res.table.addRatioToTotalCol("Ratio", 1);
-	});
-	
 	var linkchecker = newStats("Link Checker", function(linkchecker) {
 		linkchecker.table.load_sync("linkchecker/report.html thead,tbody");
 		linkchecker_applyfilter(linkchecker);
