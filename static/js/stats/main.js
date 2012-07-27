@@ -1,6 +1,10 @@
 function init() {
 	jQuery.ajaxSettings.traditional = true;
 
+	$("#filters").load("proxy/search/list/filters-html" + window.location.search, function() {
+		$(this).toggle($(".filter", this).size() > 0);
+	});
+
 	newStats("Allocators", initMainStats("allocator_facet"));
 	newStats("Datacentres", initMainStats("datacentre_facet"));
 	newStats("Prefixes", initMainStats("prefix"));
@@ -40,10 +44,6 @@ function init() {
 		show: function(event, ui) {
 			$(ui.tab).trigger('click');
 		}
-	});
-
-	$("#filters").load("proxy/search/list/filters-html" + window.location.search, function() {
-		$(this).toggle($(".filter", this).size() > 0);
 	});
 }
 
