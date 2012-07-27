@@ -5,11 +5,11 @@ function init() {
 		$(this).toggle($(".filter", this).size() > 0);
 	});
 
-	newStatsTab("Allocators", initMainStats("allocator_facet"));
-	newStatsTab("Datacentres", initMainStats("datacentre_facet"));
-	newStatsTab("Prefixes", initMainStats("prefix"));
+	newStatsTab("allocators", "Allocators", initMainStats("allocator_facet"));
+	newStatsTab("datacentres", "Datacentres", initMainStats("datacentre_facet"));
+	newStatsTab("prefixes", "Prefixes", initMainStats("prefix"));
 
-	var linkchecker = newStatsTab("Link Checker", function(linkchecker) {
+	var linkchecker = newStatsTab("linkchecker", "Link Checker", function(linkchecker) {
 		linkchecker.table.load_sync("linkchecker/report.html thead,tbody");
 		linkchecker_applyfilter(linkchecker);
 	});
@@ -38,11 +38,9 @@ function initMainStats(group_field) {
 	}
 };
 
-var stats_id = 0;
 
-function newStatsTab(label, init_function) {
-	var id = "stats-" + stats_id;
-	stats_id++;
+function newStatsTab(id, label, init_function) {
+	id = "tab-" + id;
 	var div = $("<div>").addClass("stats").attr("id", id);
 	var table = $("<table>");
 	var charts = $("<div>").addClass("charts");
