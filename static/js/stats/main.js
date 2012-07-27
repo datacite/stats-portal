@@ -3,6 +3,17 @@ function init() {
 
 	$("#filters").load("proxy/search/list/filters-html" + window.location.search, function() {
 		$(this).toggle($(".filter", this).size() > 0);
+		$(".filter", this).each(function() {
+			var filter = $(this);
+			var name = $(".name", filter).text().trim();
+			console.log(name);
+			if (name == "allocator")
+				filter.setLinksToNextTab("allocator");
+			else if (name == "datacentre")
+				filter.setLinksToNextTab("datacentres");
+			else if (name == "prefix")
+				filter.setLinksToNextTab("prefixes")
+		});
 	});
 
 	newStatsTab("allocators", "Allocators", initMainStats("allocator_facet"), "datacentres");
