@@ -31,6 +31,11 @@ function init() {
 		res.table.addRatioToTotalCol("Ratio", 1);
 	});
 	
+	var linkchecker = newStats("Link Checker", function(linkchecker) {
+		linkchecker.table.load_sync("linkchecker/report.html thead,tbody");
+		linkchecker_applyfilter(linkchecker);
+	});
+	
 	$("#stats").tabs({
 		show: function(event, ui) {
 			$(ui.tab).trigger('click');
@@ -101,5 +106,34 @@ function newStats(label, init_function) {
 	a.click(obj.load);
 	return obj;
 }
+
+function linkchecker_applyfilter(linkchecker) {
+	$("#filters .filter").each(function(el) {
+		var name = $(".name", el).text().trim();
+		var val = $(".value", el).text().trim();
+
+		if (name == "allocator") {
+			var symbol = val.split(" ")[0];
+			linkchecker.table.filterRows(function() {
+				var td = $("td", this).eq(5);
+				return td.text().indexOf(symbol + ".") != 0;
+			});
+		} else if (name == "datacentre") {
+			var symbol = val.split(" ")[0];
+			linkchecker.table.filterRows(function() {
+				var td = $("td", this).eq(5);
+				return td.text() != symbol;
+			});
+		} else if (name == "prefix") {
+			var prefix = val;
+			console.log(prefix);
+			linkchecker.table.filterRows(function() {
+				var td = $("td", this).eq(3);
+				return td.text().trim().indexOf(prefix + "/") != 0;
+			});
+		}
+	});
+}
+
 
 $(document).ready(init);

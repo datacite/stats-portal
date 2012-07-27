@@ -232,4 +232,8 @@ $.fn.removeLeadingRowsWithZeros = function() {
 	});
 }
 
+$.fn.filterRows = function(filter_func) {
+	$("tbody tr", this).filter(filter_func).hide();
+}
+
 
