@@ -19,13 +19,13 @@ function init() {
 	newStatsTab("datacentres", "Datacentres", initMainStats("datacentre_facet"), "prefixes");
 	newStatsTab("prefixes", "Prefixes", initMainStats("prefix"));
 
-	var linkchecker = newStatsTab("linkchecker", "Link Checker", function(linkchecker) {
-		linkchecker.table.load_sync("linkchecker/report.html thead,tbody");
+	var linkchecker = newStatsTab("link-checker", "Link Checker", function(linkchecker) {
+		linkchecker.table.load_sync("link-checker/report.html thead,tbody");
 		linkchecker_applyfilter(linkchecker);
 	});
 	
-	var resolutionreport = newStatsTab("resolutionreport", "Resolution Report", function (rr) {
-		rr.table.load_sync("resolutionreport/resolutions_11_2011.html thead,tbody");
+	var resolutionreport = newStatsTab("resolution-report", "Resolution Report", function (rr) {
+		rr.table.load_sync("resolution-report/resolutions_06_2012.html thead,tbody");
 		resolutionreport_applyfilter(rr);
 	});
 	
