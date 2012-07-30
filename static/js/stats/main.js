@@ -113,7 +113,7 @@ function linkchecker_applyfilter(linkchecker) {
 			var td = $("td", row).eq(5);
 			return td.text() != symbol;
 		},
-		prefix: function(row, symbol) {
+		prefix: function(row, prefix) {
 			var td = $("td", row).eq(3);
 			return $.trim(td.text()).indexOf(prefix + "/") != 0;
 		}
@@ -134,7 +134,7 @@ $.fn.applyFilters = function (filters) {
 			table.filterRows(function() { return filters.datacentre(this, symbol) });
 		} else if (name == "prefix") {
 			var prefix = val;
-			table.filterRows(function() { return filters.prefix(this, symbol) });
+			table.filterRows(function() { return filters.prefix(this, prefix) });
 		}
 	});
 }
