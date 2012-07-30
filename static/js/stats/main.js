@@ -103,31 +103,38 @@ $.fn.setLinksToNextTab = function(next_tab) {
 	}
 }
 
-
-
 function linkchecker_applyfilter(linkchecker) {
+	linkchecker.table.applyFilters({
+		allocator: function(row, symbol) {
+			var td = $("td", row).eq(5);
+			return td.text().indexOf(symbol + ".") != 0;
+		},
+		datacentre: function(row, symbol) {
+			var td = $("td", row).eq(5);
+			return td.text() != symbol;
+		},
+		prefix: function(row, symbol) {
+			var td = $("td", row).eq(3);
+			return $.trim(td.text()).indexOf(prefix + "/") != 0;
+		}
+	});
+}
+
+$.fn.applyFilters = function (filters) {
+	var table = $(this);
 	$("#filters .filter").each(function() {
 		var name = $.trim($(".name", this).text());
 		var val = $.trim($(".value", this).text());
 		
-		if (name == "allocator") {
+		if (name == "allocator" && filters.allocator) {
 			var symbol = val.split(" ")[0];
-			linkchecker.table.filterRows(function() {
-				var td = $("td", this).eq(5);
-				return td.text().indexOf(symbol + ".") != 0;
-			});
-		} else if (name == "datacentre") {
+			table.filterRows(function() { return filters.allocator(this, symbol) });
+		} else if (name == "datacentre" && filters.datacentre) {
 			var symbol = val.split(" ")[0];
-			linkchecker.table.filterRows(function() {
-				var td = $("td", this).eq(5);
-				return td.text() != symbol;
-			});
+			table.filterRows(function() { return filters.datacentre(this, symbol) });
 		} else if (name == "prefix") {
 			var prefix = val;
-			linkchecker.table.filterRows(function() {
-				var td = $("td", this).eq(3);
-				return $.trim(td.text()).indexOf(prefix + "/") != 0;
-			});
+			table.filterRows(function() { return filters.prefix(this, symbol) });
 		}
 	});
 }
