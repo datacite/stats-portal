@@ -26,6 +26,7 @@ function init() {
 	
 	var resolutionreport = newStatsTab("resolutionreport", "Resolution Report", function (rr) {
 		rr.table.load_sync("resolutionreport/resolutions_11_2011.html thead,tbody");
+		resolutionreport_applyfilter(rr);
 	});
 	
 	$("#stats").tabs({
@@ -119,6 +120,25 @@ function linkchecker_applyfilter(linkchecker) {
 		}
 	});
 }
+
+function resolutionreport_applyfilter(resolutionreport) {
+	console.log("foo");
+	resolutionreport.table.applyFilters({
+		allocator: function(row, symbol) {
+			var td = $("td", row).eq(1);
+			return td.text().indexOf(symbol + ".") == -1;
+		},
+		datacentre: function(row, symbol) {
+			var td = $("td", row).eq(1);
+			return td.text().indexOf(symbol) == -1;
+		},
+		prefix: function(row, prefix) {
+			var td = $("td", row).eq(1);
+			return td.text().indexOf(prefix) == -1;
+		}
+	});
+}
+
 
 $.fn.applyFilters = function (filters) {
 	var table = $(this);
