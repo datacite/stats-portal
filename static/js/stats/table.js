@@ -186,7 +186,7 @@ $.fn.addEmptyGroupHeaderCellIfNeeded = function() {
 }
 
 $.fn.addColTotals = function(sum, col) {
-	//undefined rows means takes last col
+	//undefined col means takes last col
 	var table = $(this);
 	var td = $("<td>");
 	if (sum == undefined) {
@@ -242,7 +242,7 @@ $.fn.removeLeadingRowsWithZeros = function() {
 }
 
 $.fn.filterRows = function(filter_func) {
-	$("tbody tr", this).filter(filter_func).hide();
+	$("tbody tr", this).filter(filter_func).remove();
 }
 
 
