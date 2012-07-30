@@ -5,7 +5,7 @@ function init() {
 		$(this).toggle($(".filter", this).size() > 0);
 		$(".filter", this).each(function() {
 			var filter = $(this);
-			var name = $(".name", filter).text().trim();
+			var name = $.trim($(".name", filter).text());
 			if (name == "allocator")
 				filter.setLinksToNextTab("allocator");
 			else if (name == "datacentre")
@@ -103,8 +103,8 @@ $.fn.setLinksToNextTab = function(next_tab) {
 
 function linkchecker_applyfilter(linkchecker) {
 	$("#filters .filter").each(function() {
-		var name = $(".name", this).text().trim();
-		var val = $(".value", this).text().trim();
+		var name = $.trim($(".name", this).text());
+		var val = $.trim($(".value", this).text());
 		
 		if (name == "allocator") {
 			var symbol = val.split(" ")[0];
@@ -122,7 +122,7 @@ function linkchecker_applyfilter(linkchecker) {
 			var prefix = val;
 			linkchecker.table.filterRows(function() {
 				var td = $("td", this).eq(3);
-				return td.text().trim().indexOf(prefix + "/") != 0;
+				return $.trim(td.text()).indexOf(prefix + "/") != 0;
 			});
 		}
 	});
