@@ -6,7 +6,6 @@ function init() {
 		$(".filter", this).each(function() {
 			var filter = $(this);
 			var name = $(".name", filter).text().trim();
-			console.log(name);
 			if (name == "allocator")
 				filter.setLinksToNextTab("allocator");
 			else if (name == "datacentre")
@@ -121,7 +120,6 @@ function linkchecker_applyfilter(linkchecker) {
 			});
 		} else if (name == "prefix") {
 			var prefix = val;
-			console.log(prefix);
 			linkchecker.table.filterRows(function() {
 				var td = $("td", this).eq(3);
 				return td.text().trim().indexOf(prefix + "/") != 0;
