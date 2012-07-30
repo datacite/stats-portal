@@ -185,17 +185,24 @@ $.fn.addEmptyGroupHeaderCellIfNeeded = function() {
 	}
 }
 
-$.fn.addColTotals = function(sum) {
+$.fn.addColTotals = function(sum, col) {
+	//undefined rows means takes last col
 	var table = $(this);
 	var td = $("<td>");
 	if (sum == undefined) {
 		sum = 0;
 		$("tbody tr", table).each(function() {
-			var number = parseInt($("td", this).last().text());
+			var el;
+			if (col == undefined)
+				el = $("td", this).last()
+			else 
+				el = $("td", this).eq(col);
+			var number = parseInt(el.text());
 			sum += number;
 		});
+		if (!isNaN(sum))
+			td.addClass("number").text(sum);
 	}
-	td.addClass("number").text(sum);
 	$("tr.totals", table).append(td);
 }
 

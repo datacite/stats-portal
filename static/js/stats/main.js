@@ -27,6 +27,10 @@ function init() {
 	var resolutionreport = newStatsTab("resolution-report", "Resolution Report", function (rr) {
 		rr.table.load_sync("resolution-report/resolutions_06_2012.html thead,tbody");
 		resolutionreport_applyfilter(rr);
+		rr.table.initFooter();
+		rr.table.addColTotals("");
+		for (var i = 2; i < 8; i++)
+			rr.table.addColTotals(undefined, i);
 	});
 	
 	$("#stats").tabs({
@@ -122,7 +126,6 @@ function linkchecker_applyfilter(linkchecker) {
 }
 
 function resolutionreport_applyfilter(resolutionreport) {
-	console.log("foo");
 	resolutionreport.table.applyFilters({
 		allocator: function(row, symbol) {
 			var td = $("td", row).eq(1);
