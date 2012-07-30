@@ -24,6 +24,10 @@ function init() {
 		linkchecker_applyfilter(linkchecker);
 	});
 	
+	var resolutionreport = newStatsTab("resolutionreport", "Resolution Report", function (rr) {
+		rr.table.load_sync("resolutionreport/resolutions_11_2011.html thead,tbody");
+	});
+	
 	$("#stats").tabs({
 		show: function(event, ui) {
 			$(ui.tab).trigger('click');
