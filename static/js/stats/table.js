@@ -5,12 +5,14 @@ $.fn.initTable = function(label) {
 			<tr class="group"><td/></tr> \
 			<tr class="individual"><th>' + label + '</th></tr> \
 		</thead> \
-		<tbody /> \
-		<tfoot> \
-			<tr class="totals"><td>Totals</td></tr> \
-		</tfoot>'
+		<tbody />'
 	);
+	table.initFooter();
 	$("tr.group", table).hide(); //show only if some group headers are added
+}
+
+$.fn.initFooter = function() {
+	$(this).append($('<tfoot><tr class="totals"><td>Totals</td></tr></tfoot>'));
 }
 
 $.fn.getGroupForCol = function(col) {
