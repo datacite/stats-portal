@@ -54,9 +54,7 @@ function newStatsTab(id, label, init_function, next_tab) {
 	id = "tab-" + id;
 	var div = $("<div>").addClass("stats").attr("id", id);
 	var table = $("<table>");
-	var charts = $("<div>").addClass("charts");
-	var br = $("<br>")
-	div.append(table,charts,br);
+	div.append(table);
 	$("#stats").append(div);
 
 	var li = $("<li>");
@@ -68,11 +66,9 @@ function newStatsTab(id, label, init_function, next_tab) {
 	var obj = {
 		div: div,
 		table: table,
-		charts: charts,
 		loaded: false,
 		finish: function() {
 			table.makeTableSortable();
-			charts.addChartsForTable(table);
 			table.stickyTableHeaders();
 			$("td.number a, tr.totals .number", table).groupDigits();
 			table.setLinksToNextTab(next_tab);
