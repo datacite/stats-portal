@@ -84,7 +84,7 @@ $.fn.addChart = function(data, chart_type) {
 			},
 			xaxis: {
 				mode: "time",
-				timeformat: "%d. %b",
+				timeformat: "%d. %b"
 		    }
 		}
 	}
