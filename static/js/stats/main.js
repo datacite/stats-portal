@@ -60,7 +60,9 @@ function init() {
 				val.div.hide();;
 			});
 			stats_hash[file].load();
-		});		
+		});
+		
+		stats_hash[select.val()].load();
 		
 	});
 	
