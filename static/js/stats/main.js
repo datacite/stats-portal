@@ -57,8 +57,10 @@ function newStatsTab(id, label, init_function, next_tab) {
 
 function newStats(id, label, init_function, next_tab) {
 	var div = $("<div>").addClass("stats").attr("id", id);
-	var table = $("<table>");
-	div.append(table);
+	var table = $("<table>").hide();
+	var divLoading = $("<div>").addClass("loading");
+	divLoading.append(throbber(), " Loading Data");
+	div.append(divLoading, table);
 	table.initTable(label);
 	var obj = {
 		div: div,
@@ -85,11 +87,6 @@ function newStats(id, label, init_function, next_tab) {
 		div.show();
 		if (!obj.loaded) {
 			obj.loading = true;
-			table.hide();
-			
-			var loading = $("<div>").addClass("loading");
-			loading.append(throbber(), " Loading Data");
-			div.append(loading);
 			
 			init_function(obj);
 			table.show();
@@ -97,7 +94,7 @@ function newStats(id, label, init_function, next_tab) {
 			obj.finish();
 			obj.loaded = true;
 			obj.loading = false;
-			loading.hide();
+			divLoading.hide();
 		}
 	};
 	return obj;
