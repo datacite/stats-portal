@@ -82,15 +82,23 @@ function newStats(id, label, init_function, next_tab) {
 	obj.load = function () { 
 		if (obj.loading)
 			return;
+		div.show();
 		if (!obj.loaded) {
 			obj.loading = true;
-			div.hide();
+			table.hide();
+			
+			var loading = $("<div>").addClass("loading");
+			loading.append(throbber(), " Loading Data");
+			div.append(loading);
+			
 			init_function(obj);
+			table.show();
+			
 			obj.finish();
 			obj.loaded = true;
 			obj.loading = false;
+			loading.hide();
 		}
-		div.show();
 	};
 	return obj;
 }
@@ -229,5 +237,8 @@ $.fn.applyFilters = function (filters) {
 	});
 }
 
+function throbber() {
+ 	return $('<img src="img/throbber-transparent.gif" class="loading" alt="spinning wheel"/>');
+}
 
 $(document).ready(init);

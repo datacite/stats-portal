@@ -105,3 +105,7 @@ a {
 #tab-resolution-report > .noresults {
     display: none;
 }
+
+#tab-resolution-report > .loading {
+    display: none;
+}
