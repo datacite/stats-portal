@@ -6,7 +6,7 @@ function init() {
 	newStatsTab("allocators", "Allocators", initMainStats("allocator_facet"), "datacentres");
 	newStatsTab("datacentres", "Datacentres", initMainStats("datacentre_facet"), "prefixes");
 	newStatsTab("prefixes", "Prefixes", initMainStats("prefix"));
-	newStatsTab("link-checker", "Link Checker", initLinkChecker);
+//	newStatsTab("link-checker", "Link Checker", initLinkChecker);
 	newStatsTab("resolution-report", "Resolution Report", initResolutionReportList);
 	
 	initTabs();
