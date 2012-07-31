@@ -1,55 +1,44 @@
 function init() {
 	jQuery.ajaxSettings.traditional = true;
-
-	$("#filters").load("proxy/search/list/filters-html" + window.location.search, function() {
-		$(this).toggle($(".filter", this).size() > 0);
-		$(".filter", this).each(function() {
-			var filter = $(this);
-			var name = $.trim($(".name", filter).text());
-			if (name == "allocator")
-				filter.setLinksToNextTab("allocator");
-			else if (name == "datacentre")
-				filter.setLinksToNextTab("datacentres");
-			else if (name == "prefix")
-				filter.setLinksToNextTab("prefixes")
-		});
-	});
+	
+	loadFilterList();
 
 	newStatsTab("allocators", "Allocators", initMainStats("allocator_facet"), "datacentres");
 	newStatsTab("datacentres", "Datacentres", initMainStats("datacentre_facet"), "prefixes");
 	newStatsTab("prefixes", "Prefixes", initMainStats("prefix"));
+	newStatsTab("link-checker", "Link Checker", initLinkChecker);
+	newStatsTab("resolution-report", "Resolution Report", initResolutionReportList);
+	
+	initTabs();
+}
 
-	var linkchecker = newStatsTab("link-checker", "Link Checker", function(linkchecker) {
-		linkchecker.table.load_sync("link-checker/report.html thead,tbody");
-		linkchecker_applyfilter(linkchecker);
+function loadFilterList() {
+	$("#filters").load("proxy/search/list/filters-html" + window.location.search, function() {
+		$(this).toggle($(".filter", this).size() > 0);
+		setNextLinkForFilterList();
 	});
-	
-	newStatsTab("resolution-report", "Resolution Report", initResolutionReport);
-	
+}
+
+function setNextLinkForFilterList() {
+	$("#filters .filter").each(function() {
+		var filter = $(this);
+		var name = $.trim($(".name", filter).text());
+		if (name == "allocator")
+			filter.setLinksToNextTab("allocator");
+		else if (name == "datacentre")
+			filter.setLinksToNextTab("datacentres");
+		else if (name == "prefix")
+			filter.setLinksToNextTab("prefixes")
+	});
+}
+
+function initTabs() {
 	$("#stats").tabs({
 		show: function(event, ui) {
 			$(ui.tab).trigger('click');
 		}
 	});
 }
-
-function initMainStats(group_field) { 
-	return function(stats) {
-		stats.table.addColGroup("DOI Registrations", 4);
-		stats.table.addCol("All Time", group_field);
-		stats.table.addCol("This Year", group_field, "created:[NOW/YEAR TO *]");
-		stats.table.addCol("Last 30 Days", group_field, "created:[NOW-30DAYS/DAY TO *]");
-		stats.table.addCol("Last 7 Days", group_field, "created:[NOW-7DAYS/DAY TO *]");
-		stats.table.addColGroup("Metadata Uploads", 4);
-		stats.table.addCol("All Time", group_field, "has_metadata:true");
-		stats.table.addCol("This Year", group_field, "uploaded:[NOW/YEAR TO *]");
-		stats.table.addCol("Last 30 Days", group_field, "uploaded:[NOW-30DAYS/DAY TO *]");
-		stats.table.addCol("Last 7 Days", group_field, "uploaded:[NOW-7DAYS/DAY TO *]");
-		stats.table.addRatioCol("Metadata Ratio", 5, 1);
-		stats.table.removeRowsWithZeros();
-	}
-};
-
 
 function newStatsTab(id, label, init_function, next_tab) {
 	id = "tab-" + id;
@@ -96,20 +85,29 @@ function newStats(id, label, init_function, next_tab) {
 	return obj;
 }
 
-$.fn.setLinksToNextTab = function(next_tab) {
-	if (next_tab) {
-		$("a", this).each(function() {
-			var a = $(this);
-			var href = a.attr("href");
-			if (href.indexOf("?") == 0) {
-				href += "#tab-" + next_tab;
-				a.attr("href", href);
-			}
-		});
+function initMainStats(group_field) { 
+	return function(stats) {
+		stats.table.addColGroup("DOI Registrations", 4);
+		stats.table.addCol("All Time", group_field);
+		stats.table.addCol("This Year", group_field, "created:[NOW/YEAR TO *]");
+		stats.table.addCol("Last 30 Days", group_field, "created:[NOW-30DAYS/DAY TO *]");
+		stats.table.addCol("Last 7 Days", group_field, "created:[NOW-7DAYS/DAY TO *]");
+		stats.table.addColGroup("Metadata Uploads", 4);
+		stats.table.addCol("All Time", group_field, "has_metadata:true");
+		stats.table.addCol("This Year", group_field, "uploaded:[NOW/YEAR TO *]");
+		stats.table.addCol("Last 30 Days", group_field, "uploaded:[NOW-30DAYS/DAY TO *]");
+		stats.table.addCol("Last 7 Days", group_field, "uploaded:[NOW-7DAYS/DAY TO *]");
+		stats.table.addRatioCol("Metadata Ratio", 5, 1);
+		stats.table.removeRowsWithZeros();
 	}
+};
+
+function initLinkChecker(tab) {
+	tab.table.load_sync("link-checker/report.html thead,tbody");
+	applyFilterLinkChecker(tab);
 }
 
-function initResolutionReport(tab) {
+function initResolutionReportList(tab) {
 	var list = $("<div>");
 	list.load_sync("resolution-report/index.html a");
 
@@ -127,15 +125,7 @@ function initResolutionReport(tab) {
 		option.attr("value", file);
 		select.append(option);
 
-		var report = newStats("resolution-report-" + file, label, function(rr) {
-			rr.table.load_sync("resolution-report/" + file + " thead,tbody");
-			resolutionreport_applyfilter(rr);
-			rr.table.initFooter();
-			rr.table.addColTotals("");
-			for ( var i = 2; i < 8; i++)
-				rr.table.addColTotals(undefined, i);
-		});
-		
+		var report = newStats("resolution-report-" + file, label, initResolutionReport(file));
 		reports[file] = report;
 		report.div.hide();
 		tab.div.append(report.div);
@@ -152,7 +142,18 @@ function initResolutionReport(tab) {
 	reports[select.val()].load();
 }
 
-function linkchecker_applyfilter(linkchecker) {
+function initResolutionReport(file) {
+	return function(rr) {
+		rr.table.load_sync("resolution-report/" + file + " thead,tbody");
+		applyFilterResolutionReport(rr);
+		rr.table.initFooter();
+		rr.table.addColTotals("");
+		for ( var i = 2; i < 8; i++)
+			rr.table.addColTotals(undefined, i);
+	};
+}
+
+function applyFilterLinkChecker(linkchecker) {
 	linkchecker.table.applyFilters({
 		allocator: function(row, symbol) {
 			var td = $("td", row).eq(5);
@@ -169,7 +170,7 @@ function linkchecker_applyfilter(linkchecker) {
 	});
 }
 
-function resolutionreport_applyfilter(resolutionreport) {
+function applyFilterResolutionReport(resolutionreport) {
 	resolutionreport.table.applyFilters({
 		allocator: function(row, symbol) {
 			var td = $("td", row).eq(1);
@@ -186,6 +187,18 @@ function resolutionreport_applyfilter(resolutionreport) {
 	});
 }
 
+$.fn.setLinksToNextTab = function(next_tab) {
+	if (next_tab) {
+		$("a", this).each(function() {
+			var a = $(this);
+			var href = a.attr("href");
+			if (href.indexOf("?") == 0) {
+				href += "#tab-" + next_tab;
+				a.attr("href", href);
+			}
+		});
+	}
+}
 
 $.fn.applyFilters = function (filters) {
 	var table = $(this);
