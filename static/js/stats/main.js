@@ -70,16 +70,21 @@ function initMainStats(group_field) {
 
 function newStatsTab(id, label, init_function, next_tab) {
 	id = "tab-" + id;
-	var div = $("<div>").addClass("stats").attr("id", id);
-	var table = $("<table>");
-	div.append(table);
-	$("#stats").append(div);
-
 	var li = $("<li>");
 	var a = $("<a>").text(label).attr("href", "#" + id);
 	li.append(a);
 	$("#stats ul").append(li);
 	
+	var stats = newStats(id, label, init_function, next_tab);
+	a.click(stats.load);
+	$("#stats").append(stats.div);
+	return stats;
+}
+
+function newStats(id, label, init_function, next_tab) {
+	var div = $("<div>").addClass("stats").attr("id", id);
+	var table = $("<table>");
+	div.append(table);
 	table.initTable(label);
 	var obj = {
 		div: div,
@@ -101,7 +106,6 @@ function newStatsTab(id, label, init_function, next_tab) {
 			obj.loaded = true;
 		}
 	};
-	a.click(obj.load);
 	return obj;
 }
 
