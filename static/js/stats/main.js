@@ -24,13 +24,23 @@ function init() {
 		linkchecker_applyfilter(linkchecker);
 	});
 	
-	var resolutionreport = newStatsTab("resolution-report", "Resolution Report", function (rr) {
-		rr.table.load_sync("resolution-report/resolutions_06_2012.html thead,tbody");
-		resolutionreport_applyfilter(rr);
-		rr.table.initFooter();
-		rr.table.addColTotals("");
-		for (var i = 2; i < 8; i++)
-			rr.table.addColTotals(undefined, i);
+	
+	var list = $("<div>");
+	list.load_sync("resolution-report/index.html a");
+	
+	var i = 0;
+	$("a", list).each(function() {
+		i++;
+		var a = $(this);
+		var file = a.attr("href");
+		newStatsTab("resolution-report-" + i, a.text(), function (rr) {
+			rr.table.load_sync("resolution-report/" + file + " thead,tbody");
+			resolutionreport_applyfilter(rr);
+			rr.table.initFooter();
+			rr.table.addColTotals("");
+			for (var i = 2; i < 8; i++)
+				rr.table.addColTotals(undefined, i);
+		});
 	});
 	
 	$("#stats").tabs({
