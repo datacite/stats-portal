@@ -24,47 +24,7 @@ function init() {
 		linkchecker_applyfilter(linkchecker);
 	});
 	
-	newStatsTab("resolution-report", "Resolution Report", function (tab) {
-		var list = $("<div>");
-		list.load_sync("resolution-report/index.html a");
-
-		var stats_list = $("<div>");
-		var stats_hash = {};
-		var select = $("<select>");
-		$("a", list).reverse().each(function() {
-			var a = $(this)
-			var file = a.attr("href");
-			var label = a.text();
-			
-			var option = $("<option>");
-			option.text(label);
-			option.attr("value", file);
-			select.append(option);
-			
-			var stats = newStats("resolution-report-" + file, label, function (rr) {
-				rr.table.load_sync("resolution-report/" + file + " thead,tbody");
-				resolutionreport_applyfilter(rr);
-				rr.table.initFooter();
-				rr.table.addColTotals("");
-				for (var i = 2; i < 8; i++)
-					rr.table.addColTotals(undefined, i);
-			});
-			stats_hash[file] = stats;
-			stats_list.append(stats.div.hide());
-		});
-
-		tab.div.append(select,stats_list);
-		select.change(function() {
-			var file = $(this).val();
-			$.each(stats_hash, function (key, val) {
-				val.div.hide();;
-			});
-			stats_hash[file].load();
-		});
-		
-		stats_hash[select.val()].load();
-		
-	});
+	newStatsTab("resolution-report", "Resolution Report", initResolutionReport);
 	
 	$("#stats").tabs({
 		show: function(event, ui) {
@@ -147,6 +107,49 @@ $.fn.setLinksToNextTab = function(next_tab) {
 			}
 		});
 	}
+}
+
+function initResolutionReport(tab) {
+	var list = $("<div>");
+	list.load_sync("resolution-report/index.html a");
+
+	var reports = {};
+	var select = $("<select>");
+	tab.div.append(select);
+	
+	$("a", list).reverse().each(function() {
+		var a = $(this);
+		var file = a.attr("href");
+		var label = a.text();
+
+		var option = $("<option>");
+		option.text(label);
+		option.attr("value", file);
+		select.append(option);
+
+		var report = newStats("resolution-report-" + file, label, function(rr) {
+			rr.table.load_sync("resolution-report/" + file + " thead,tbody");
+			resolutionreport_applyfilter(rr);
+			rr.table.initFooter();
+			rr.table.addColTotals("");
+			for ( var i = 2; i < 8; i++)
+				rr.table.addColTotals(undefined, i);
+		});
+		
+		reports[file] = report;
+		report.div.hide();
+		tab.div.append(report.div);
+	});
+
+	select.change(function() {
+		var file = $(this).val();
+		$.each(reports, function(key, val) {
+			val.div.hide();
+		});
+		reports[file].load();
+	});
+
+	reports[select.val()].load();
 }
 
 function linkchecker_applyfilter(linkchecker) {
