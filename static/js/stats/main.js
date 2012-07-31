@@ -106,9 +106,9 @@ function newStats(id, label, init_function, next_tab) {
 			div.hide();
 			init_function(obj);
 			obj.finish();
-			div.show();
 			obj.loaded = true;
 		}
+		div.show();
 	};
 	return obj;
 }
