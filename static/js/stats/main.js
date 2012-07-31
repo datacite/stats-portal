@@ -65,6 +65,9 @@ function newStats(id, label, init_function, next_tab) {
 		finish: function() {
 			if ($("tbody ", table).children().size() == 0) {
 				table.hide();
+				var noresults = $("<div>").addClass("noresults");
+				noresults.text("No matching results found");
+				div.append(noresults);
 			} else {
 				table.makeTableSortable();
 				table.stickyTableHeaders();

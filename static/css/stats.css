@@ -101,3 +101,7 @@ br {
 a {
     color: #0084B9 !important;
 }
+
+#tab-resolution-report > .noresults {
+    display: none;
+}
