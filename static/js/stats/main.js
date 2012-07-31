@@ -193,11 +193,12 @@ function applyFilterResolutionReport(resolutionreport) {
 		},
 		datacentre: function(row, symbol) {
 			var td = $("td", row).eq(1);
-			return td.text().indexOf(symbol) == -1;
+			var list = $("p", td).filter(function() { return $(this).text() == symbol });
+			return list.size() == 0;
 		},
 		prefix: function(row, prefix) {
 			var td = $("td", row).eq(1);
-			return td.text().indexOf(prefix) == -1;
+			return $("a", td).text() != prefix;
 		}
 	});
 }
