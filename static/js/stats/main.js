@@ -91,10 +91,14 @@ function newStats(id, label, init_function, next_tab) {
 		table: table,
 		loaded: false,
 		finish: function() {
-			table.makeTableSortable();
-			table.stickyTableHeaders();
-			$("td.number a, tr.totals .number", table).groupDigits();
-			table.setLinksToNextTab(next_tab);
+			if ($("tbody ", table).children().size() == 0) {
+				table.hide();
+			} else {
+				table.makeTableSortable();
+				table.stickyTableHeaders();
+				$("td.number a, tr.totals .number", table).groupDigits();
+				table.setLinksToNextTab(next_tab);
+			}
 		}
 	};
 	obj.load = function () { 
