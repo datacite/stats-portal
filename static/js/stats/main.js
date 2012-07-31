@@ -48,7 +48,9 @@ function newStatsTab(id, label, init_function, next_tab) {
 	$("#stats ul").append(li);
 	
 	var stats = newStats(id, label, init_function, next_tab);
-	a.click(stats.load);
+	a.click(function() {
+		setTimeout(stats.load, 0);
+	});
 	$("#stats").append(stats.div);
 	return stats;
 }
@@ -61,6 +63,7 @@ function newStats(id, label, init_function, next_tab) {
 	var obj = {
 		div: div,
 		table: table,
+		loading: false,
 		loaded: false,
 		finish: function() {
 			if ($("tbody ", table).children().size() == 0) {
@@ -77,11 +80,15 @@ function newStats(id, label, init_function, next_tab) {
 		}
 	};
 	obj.load = function () { 
+		if (obj.loading)
+			return;
 		if (!obj.loaded) {
+			obj.loading = true;
 			div.hide();
 			init_function(obj);
 			obj.finish();
 			obj.loaded = true;
+			obj.loading = false;
 		}
 		div.show();
 	};
