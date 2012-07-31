@@ -5,3 +5,5 @@ $.fn.load_sync = function(url, params, callback) {
     $.ajaxSetup({async : true});
     return this;
 };
+
+$.fn.reverse = [].reverse;
