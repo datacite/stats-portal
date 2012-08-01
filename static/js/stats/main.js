@@ -132,7 +132,7 @@ function initResolutionReportList(tab) {
 	
 	$("a", list).reverse().each(function() {
 		var a = $(this);
-		var file = a.attr("href");
+		var file = basename(a.attr("href"));
 		var label = a.text();
 
 		var option = $("<option>");

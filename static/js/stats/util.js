@@ -64,7 +64,7 @@ function makeUiHref(fq) {
 }
 
 function getQueryString() {
-	return window.location.search.slice(1)
+	return window.location.search.slice(1);
 }
 
 function getFacetFieldName() {
@@ -84,5 +84,9 @@ function getGroupingLabel() {
 }
 
 function identity(x) {
-	return x
+	return x;
+}
+
+function basename(path) {
+    return path.replace(/\\/g,'/').replace( /.*\//, '' );
 }
