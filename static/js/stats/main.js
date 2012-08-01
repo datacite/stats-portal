@@ -3,11 +3,11 @@ function init() {
 	
 	loadFilterList();
 
-	newStatsTab("allocators", "Allocators", initMainStats("allocator_facet"), "datacentres");
-	newStatsTab("datacentres", "Datacentres", initMainStats("datacentre_facet"), "prefixes");
-	newStatsTab("prefixes", "Prefixes", initMainStats("prefix"));
+	newStatsTab("allocators", "Registrations by Allocators", initMainStats("allocator_facet"), "datacentres", "Allocator");
+	newStatsTab("datacentres", "Registrations by Datacentres", initMainStats("datacentre_facet"), "prefixes", "Datacentre");
+	newStatsTab("prefixes", "Registrations by Prefixes", initMainStats("prefix"), null, "Prefix");
 //	newStatsTab("link-checker", "Link Checker", initLinkChecker);
-	newStatsTab("resolution-report", "Resolution Report", initResolutionReportList);
+	newStatsTab("resolution-report", "Resolutions by Month", initResolutionReportList);
 	
 	initTabs();
 }
@@ -40,14 +40,14 @@ function initTabs() {
 	});
 }
 
-function newStatsTab(id, label, init_function, next_tab) {
+function newStatsTab(id, label, init_function, next_tab, table_label) {
 	id = "tab-" + id;
 	var li = $("<li>");
 	var a = $("<a>").text(label).attr("href", "#" + id);
 	li.append(a);
 	$("#stats ul").append(li);
 	
-	var stats = newStats(id, label, init_function, next_tab);
+	var stats = newStats(id, label, init_function, next_tab, table_label);
 	a.click(function() {
 		setTimeout(stats.load, 0);
 	});
@@ -55,13 +55,13 @@ function newStatsTab(id, label, init_function, next_tab) {
 	return stats;
 }
 
-function newStats(id, label, init_function, next_tab) {
+function newStats(id, label, init_function, next_tab, table_label) {
 	var div = $("<div>").addClass("stats").attr("id", id);
 	var table = $("<table>").hide();
 	var divLoading = $("<div>").addClass("loading");
 	divLoading.append(throbber(), " Loading Data");
 	div.append(divLoading, table);
-	table.initTable(label);
+	table.initTable(table_label || label);
 	var obj = {
 		div: div,
 		table: table,
