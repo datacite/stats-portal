@@ -1,3 +1,7 @@
+body {
+    font-family: sans-serif;
+}
+
 a {
     color: #0084B9;
     text-decoration: none;
@@ -12,6 +16,18 @@ h1,h2,h3 {
 	color: #0084B9;
 }
 
+h1 {
+    font-weight: normal;
+    font-size: 50px;
+}
+
+h1 small {
+    color: #77C9EA;
+}
+
+h1 img {
+    vertical-align: middle;
+}
 
 #filters {
   line-height: 150%;
