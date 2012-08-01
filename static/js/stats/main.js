@@ -13,7 +13,7 @@ function init() {
 }
 
 function loadFilterList() {
-	$("#filters").load("proxy/search/list/filters-html" + window.location.search, function() {
+	$("#filters").load_sync("proxy/search/list/filters-html" + window.location.search, function() {
 		$(this).toggle($(".filter", this).size() > 0);
 		setNextLinkForFilterList();
 	});
