@@ -78,6 +78,7 @@ function newStats(id, label, init_function, next_tab, table_label) {
 				table.stickyTableHeaders();
 				$("td.number a, tr.totals .number", table).groupDigits();
 				table.setLinksToNextTab(next_tab);
+				div.setTargetForExternalLinks();
 			}
 		}
 	};
@@ -233,6 +234,12 @@ $.fn.applyFilters = function (filters) {
 			table.filterRows(function() { return filters.prefix(this, prefix) });
 		}
 	});
+}
+
+$.fn.setTargetForExternalLinks = function() {
+	$("a", this).filter(function() {
+		return $(this).attr("href").indexOf("?") != 0;
+	}).attr("target", "_blank");
 }
 
 function throbber() {
