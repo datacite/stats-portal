@@ -127,11 +127,13 @@ function initHistoryStats(gap, header, label) {
 		hist.table.addDateCol(header, "minted", label, gap, "aggregated");
 		hist.table.addColGroup("created", 2);
 		hist.table.addDateCol(header, "created", label, gap, "aggregated");
+		hist.table.addColGroup("updated", 2)
+		hist.table.addDateCol(header, "updated", label, gap, "aggregated");
 		hist.table.addColGroup("uploaded", 2)
 		hist.table.addDateCol(header, "uploaded", label, gap, "aggregated");
 		hist.table.addRatioCol("MDS Ratio", 4, 2);
-		hist.table.addRatioCol("Metadata Ratio", 6, 2);
-		hist.table.removeLeadingRowsWithZeros([1,3,5]);
+		hist.table.addRatioCol("Metadata Ratio", 8, 2);
+		hist.table.removeLeadingRowsWithZeros([1,3,5,7]);
 	}
 };
 
