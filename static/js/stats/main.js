@@ -9,6 +9,19 @@ function init() {
 //	newStatsTab("link-checker", "Link Checker", initLinkChecker);
 	newStatsTab("resolution-report", "Resolutions by Month", initResolutionReportList);
 	
+	newStatsTab("history", "Registration History", function(month) {
+		month.table.addColGroup("minted", 2);
+		month.table.addDateCol("per Month", "minted", "%b %y", "+1MONTH");
+		month.table.addAggregationCol("aggregated", 1);
+		month.table.addColGroup("created", 2);
+		month.table.addDateCol("per Month", "created", "%b %y", "+1MONTH");
+		month.table.addAggregationCol("aggregated", 3);
+		month.table.addColGroup("uploaded", 2)
+		month.table.addDateCol("per Month", "uploaded", "%b %y", "+1MONTH");
+		month.table.addAggregationCol("aggregated", 5);
+		month.table.removeLeadingRowsWithZeros();
+	});
+	
 	initTabs();
 }
 
