@@ -9,17 +9,8 @@ function init() {
 //	newStatsTab("link-checker", "Link Checker", initLinkChecker);
 	newStatsTab("resolution-report", "Resolutions by Month", initResolutionReportList);
 	
-	newStatsTab("history", "Registration History", function(month) {
-		month.table.addColGroup("minted", 2);
-		month.table.addDateCol("per Month", "minted", "%b %y", "+1MONTH", "aggregated");
-		month.table.addColGroup("created", 2);
-		month.table.addDateCol("per Month", "created", "%b %y", "+1MONTH", "aggregated");
-		month.table.addColGroup("uploaded", 2)
-		month.table.addDateCol("per Month", "uploaded", "%b %y", "+1MONTH", "aggregated");
-		month.table.addRatioCol("MDS Ratio", 4, 2);
-		month.table.addRatioCol("Metadata Ratio", 6, 2);
-		month.table.removeLeadingRowsWithZeros();
-	});
+	newStatsTab("history-year", "Annual History", initHistoryStats("+1YEAR", "per year"));
+	newStatsTab("history-month", "Monthly History", initHistoryStats("+1MONTH", "per month"));
 	
 	initTabs();
 }
@@ -127,6 +118,20 @@ function initMainStats(group_field) {
 		stats.table.addCol("Last 7 Days", group_field, "uploaded:[NOW-7DAYS/DAY TO *]");
 		stats.table.addRatioCol("Metadata Ratio", 5, 1);
 		stats.table.removeRowsWithZeros();
+	}
+};
+
+function initHistoryStats(gap, header) { 
+	return function(hist) {
+		hist.table.addColGroup("minted", 2);
+		hist.table.addDateCol(header, "minted", "%b %y", gap, "aggregated");
+		hist.table.addColGroup("created", 2);
+		hist.table.addDateCol(header, "created", "%b %y", gap, "aggregated");
+		hist.table.addColGroup("uploaded", 2)
+		hist.table.addDateCol(header, "uploaded", "%b %y", gap, "aggregated");
+		hist.table.addRatioCol("MDS Ratio", 4, 2);
+		hist.table.addRatioCol("Metadata Ratio", 6, 2);
+		hist.table.removeLeadingRowsWithZeros();
 	}
 };
 
