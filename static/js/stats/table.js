@@ -32,6 +32,10 @@ function filterLinkFormatter(field) {
 	}
 }
 
+$.fn.countCols = function() {
+	return $("thead tr.individual th", this).size();
+}
+
 $.fn.addCol = function(header, field, fq) {
 	var labelFormatter = function(value) {
 		return value.split(" ")[0];
@@ -58,20 +62,24 @@ $.fn.addFacetCol = function(header, field) {
 	this.addGenericCol(header, data, filterLinkFormatter(field), identity, uiHrefConstructor);
 }
 
-$.fn.addDateCol = function(header, field, format, gap) {
+$.fn.addDateCol = function(header, field, format, gap, aggregation) {
 	var dateFormatter = function(value) {
 		var date = new Date(value);
 		return $.plot.formatDate(date, format);
 	}
 	var uiHrefConstructor = function(data) {
-		var fq = field + ':[' + data + ' TO ' + data + gap + ']';
-		return makeUiHref([fq]);
+		return makeDateSpanUiHref(field, data, data, gap);
 	};
+	var uiHrefAggregationConstructor = function(data) {
+		return makeDateSpanUiHref(field, '*', data, gap);
+	}
 	var data = {
 		"facet.range" : field,
 		"facet.range.gap" : gap
 	}
 	this.addGenericCol(header, data, dateFormatter, dateFormatter, uiHrefConstructor);
+	if (aggregation)
+		this.addAggregationCol(aggregation, this.countCols() - 1, uiHrefAggregationConstructor);
 }
 
 $.fn.addGenericCol= function(header, data, firstColFormatter, labelFormatter, uiHrefConstructor) {
@@ -150,7 +158,7 @@ $.fn.addRatioToTotalCol = function(header, col) {
 	table.addColTotals("100%");
 }
 
-$.fn.addAggregationCol = function(header, col) {
+$.fn.addAggregationCol = function(header, col, uiHrefConstructor) {
 	var table = $(this);
 	table.addColHeader(header, "time");
 	var sum = 0;
@@ -158,7 +166,16 @@ $.fn.addAggregationCol = function(header, col) {
 		var row = $(this);
 		var number = $("td", row).eq(col).text();
 		sum += parseInt(number);
-		var td = $("<td>").addClass("number").text(sum);
+		var td = $("<td>").addClass("number");
+		if (sum > 0 && uiHrefConstructor) {
+			var data = $("td",row).eq(0).data().raw;
+			var a = $("<a>").text(sum);
+			a.attr("href", uiHrefConstructor(data));
+			td.append(a);
+		} else {
+			td.text(sum);
+		}
+		
 		row.append(td);
 	});
 	table.addColTotals("100%");

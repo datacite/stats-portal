@@ -63,6 +63,11 @@ function makeUiHref(fq) {
 	return "proxy/search/ui?" + $.param(params) + "&" + getQueryString();
 }
 
+function makeDateSpanUiHref(field, from, to, gap) {
+	var fq = field + ':[' + from + ' TO ' + to + gap + ']';
+	return makeUiHref([fq]);
+};
+
 function getQueryString() {
 	return window.location.search.slice(1);
 }
