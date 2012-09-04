@@ -117,7 +117,7 @@ function initMainStats(group_field) {
 		stats.table.addCol("Last 30 Days", group_field, "uploaded:[NOW-30DAYS/DAY TO *]");
 		stats.table.addCol("Last 7 Days", group_field, "uploaded:[NOW-7DAYS/DAY TO *]");
 		stats.table.addRatioCol("Metadata Ratio", 5, 1);
-		stats.table.removeRowsWithZeros();
+		stats.table.removeRowsWithZeros([1,5]);
 	}
 };
 
@@ -131,7 +131,7 @@ function initHistoryStats(gap, header, label) {
 		hist.table.addDateCol(header, "uploaded", label, gap, "aggregated");
 		hist.table.addRatioCol("MDS Ratio", 4, 2);
 		hist.table.addRatioCol("Metadata Ratio", 6, 2);
-		hist.table.removeLeadingRowsWithZeros();
+		hist.table.removeLeadingRowsWithZeros([1,3,5]);
 	}
 };
 
