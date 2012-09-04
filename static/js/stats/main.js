@@ -19,6 +19,8 @@ function init() {
 		month.table.addColGroup("uploaded", 2)
 		month.table.addDateCol("per Month", "uploaded", "%b %y", "+1MONTH");
 		month.table.addAggregationCol("aggregated", 5);
+		month.table.addRatioCol("MDS Ratio", 4, 2);
+		month.table.addRatioCol("Metadata Ratio", 6, 2);
 		month.table.removeLeadingRowsWithZeros();
 	});
 	
