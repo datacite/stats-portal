@@ -9,8 +9,8 @@ function init() {
 //	newStatsTab("link-checker", "Link Checker", initLinkChecker);
 	newStatsTab("resolution-report", "Resolutions by Month", initResolutionReportList);
 	
-	newStatsTab("history-year", "Annual History", initHistoryStats("+1YEAR", "per year"));
-	newStatsTab("history-month", "Monthly History", initHistoryStats("+1MONTH", "per month"));
+	newStatsTab("history-year", "Annual History", initHistoryStats("+1YEAR", "per year", "%y"));
+	newStatsTab("history-month", "Monthly History", initHistoryStats("+1MONTH", "per month", "%b %y"));
 	
 	initTabs();
 }
@@ -121,14 +121,14 @@ function initMainStats(group_field) {
 	}
 };
 
-function initHistoryStats(gap, header) { 
+function initHistoryStats(gap, header, label) { 
 	return function(hist) {
 		hist.table.addColGroup("minted", 2);
-		hist.table.addDateCol(header, "minted", "%b %y", gap, "aggregated");
+		hist.table.addDateCol(header, "minted", label, gap, "aggregated");
 		hist.table.addColGroup("created", 2);
-		hist.table.addDateCol(header, "created", "%b %y", gap, "aggregated");
+		hist.table.addDateCol(header, "created", label, gap, "aggregated");
 		hist.table.addColGroup("uploaded", 2)
-		hist.table.addDateCol(header, "uploaded", "%b %y", gap, "aggregated");
+		hist.table.addDateCol(header, "uploaded", label, gap, "aggregated");
 		hist.table.addRatioCol("MDS Ratio", 4, 2);
 		hist.table.addRatioCol("Metadata Ratio", 6, 2);
 		hist.table.removeLeadingRowsWithZeros();
