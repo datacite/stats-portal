@@ -238,23 +238,16 @@ $.fn.makeTableSortable = function() {
 }
 
 $.fn.removeRowsWithZeros = function() {
-	var table = this;
-	$("tbody tr", table).each(function() {
-		var count = $("td", this).eq(1).text();
-		if ($.trim(count) == "0") 
-			$(this).remove();
+	this.filterRows(function() {
+		return $(this).isZeroRow(); 
 	});
 }
 
 $.fn.removeLeadingRowsWithZeros = function() {
-	var table = this;
 	var isLeadingRow = true;
-	$("tbody tr", table).each(function() {
-		var count = $("td", this).eq(1).text();
-		if ($.trim(count) == "0" && isLeadingRow) 
-			$(this).remove();
-		else 
-			isLeadingRow = false;
+	this.filterRows(function() {
+		isLeadingRow &= $(this).isZeroRow();
+		return isLeadingRow;
 	});
 }
 
@@ -262,4 +255,7 @@ $.fn.filterRows = function(filter_func) {
 	$("tbody tr", this).filter(filter_func).remove();
 }
 
-
+$.fn.isZeroRow = function() {
+	var count = $("td", this).eq(1).text();
+	return ($.trim(count) == "0"); 
+}
