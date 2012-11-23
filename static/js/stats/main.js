@@ -108,9 +108,9 @@ function initMainStats(group_field) {
 	return function(stats) {
 		stats.table.addColGroup("DOI Registrations", 4);
 		stats.table.addCol("All Time", group_field);
-		stats.table.addCol("This Year", group_field, "created:[NOW/YEAR TO *]");
-		stats.table.addCol("Last 30 Days", group_field, "created:[NOW-30DAYS/DAY TO *]");
-		stats.table.addCol("Last 7 Days", group_field, "created:[NOW-7DAYS/DAY TO *]");
+		stats.table.addCol("This Year", group_field, "minted:[NOW/YEAR TO *]");
+		stats.table.addCol("Last 30 Days", group_field, "minted:[NOW-30DAYS/DAY TO *]");
+		stats.table.addCol("Last 7 Days", group_field, "minted:[NOW-7DAYS/DAY TO *]");
 		stats.table.addColGroup("Metadata Uploads", 4);
 		stats.table.addCol("All Time", group_field, "has_metadata:true");
 		stats.table.addCol("This Year", group_field, "uploaded:[NOW/YEAR TO *]");
