@@ -9,8 +9,8 @@ function init() {
 //	newStatsTab("link-checker", "Link Checker", initLinkChecker);
 	newStatsTab("resolution-report", "Resolutions by Month", initResolutionReportList);
 	
-	newStatsTab("history-year", "Annual History", initHistoryStats("+1YEAR", "per year", "%y"));
-	newStatsTab("history-month", "Monthly History", initHistoryStats("+1MONTH", "per month", "%b %y"));
+//	newStatsTab("history-year", "Annual History", initHistoryStats("+1YEAR", "per year", "%y"));
+//	newStatsTab("history-month", "Monthly History", initHistoryStats("+1MONTH", "per month", "%b %y"));
 	
 	initTabs();
 }
