@@ -125,3 +125,8 @@ a {
 #tab-resolution-report > .loading {
     display: none;
 }
+
+.digit-spacer {
+    display: inline-block;
+    width: 5px;
+}

@@ -1,16 +1,17 @@
 $.fn.groupDigits = function() {
 	$(this).each(function() {
 		var text = $(this).text();
-		$(this).text(groupDigits(text));
+		$(this).html(groupDigits(text));
 	});
 }
 
 function groupDigits(num) {
 	var arr = num.split("").reverse();
 	var res = "";
+	var spacer = '<span class="digit-spacer"/>';
 	for (var i = 0; i< arr.length; i++) {
 		if (i % 3 == 0 && i != 0) 
-			res = " " + res;
+			res =  spacer + res;
 		res = arr[i] + res;
 	};
 	return res;
