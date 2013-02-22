@@ -117,7 +117,6 @@ $.fn.addGenericCol= function(header, data, firstColFormatter, labelFormatter, ui
 				} else {
 					var tr = $("<tr>");
 					var label_td = $("<td>").html(firstColFormatter(value));
-					label_td.data("raw", value);
 					label_td.data("label", labelFormatter(value))
 					tr.append(label_td, td);
 					$("tbody", table).append(tr);
@@ -167,7 +166,7 @@ $.fn.addAggregationCol = function(header, col, uiHrefConstructor) {
 		sum += parseInt(number);
 		var td = $("<td>").addClass("number");
 		if (sum > 0 && uiHrefConstructor) {
-			var data = $("td",row).eq(0).data().raw;
+			var data = $("td",row).eq(0).text();
 			var a = $("<a>").text(sum);
 			a.attr("href", uiHrefConstructor(data));
 			td.append(a);
@@ -224,13 +223,7 @@ $.fn.addColTotals = function(sum, col) {
 
 $.fn.makeTableSortable = function(options) {
 	var default_options = {
-		sortList : [[0,0]],
-		textExtraction : function(td) {
-			var text = $(td).data("sort");
-			if (text == undefined) 
-				text = $(td).text();
-			return text;
-		}
+		sortList : [[0,0]]
 	};
 	
 	var cur_options = $.extend({},default_options,options);
