@@ -117,7 +117,6 @@ $.fn.addGenericCol= function(header, data, firstColFormatter, labelFormatter, ui
 				} else {
 					var tr = $("<tr>");
 					var label_td = $("<td>").html(firstColFormatter(value));
-					label_td.data("sort", i);
 					label_td.data("raw", value);
 					label_td.data("label", labelFormatter(value))
 					tr.append(label_td, td);
@@ -223,9 +222,8 @@ $.fn.addColTotals = function(sum, col) {
 	$("tr.totals", table).append(td);
 }
 
-$.fn.makeTableSortable = function() {
-	$(this).addClass("tablesorter").tablesorter(
-	{
+$.fn.makeTableSortable = function(options) {
+	var default_options = {
 		sortList : [[0,0]],
 		textExtraction : function(td) {
 			var text = $(td).data("sort");
@@ -233,7 +231,11 @@ $.fn.makeTableSortable = function() {
 				text = $(td).text();
 			return text;
 		}
-	});
+	};
+	
+	var cur_options = $.extend({},default_options,options);
+	
+	$(this).addClass("tablesorter").tablesorter(cur_options);
 	
 }
 

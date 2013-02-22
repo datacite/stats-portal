@@ -1,11 +1,12 @@
 function init() {
 	jQuery.ajaxSettings.traditional = true;
-	
+
+	addCustomTablesorterParser();
 	loadFilterList();
 
 	newStatsTab("allocators", "Registrations by Allocators", initMainStats("allocator_facet"), "datacentres", "Allocator");
 	newStatsTab("datacentres", "Registrations by Datacentres", initMainStats("datacentre_facet"), "prefixes", "Datacentre");
-	newStatsTab("prefixes", "Registrations by Prefixes", initMainStats("prefix"), "resolution-report", "Prefix");
+	newStatsTab("prefixes", "Registrations by Prefixes", initMainStats("prefix"), "resolution-report", "Prefixes", {headers: { 0: { sorter:'prefixes' }}});
 //	newStatsTab("link-checker", "Link Checker", initLinkChecker);
 	newStatsTab("resolution-report", "Resolutions by Month", initResolutionReportList);
 	
@@ -13,6 +14,19 @@ function init() {
 //	newStatsTab("history-month", "Monthly History", initHistoryStats("+1MONTH", "per month", "%b %y"));
 	
 	initTabs();
+}
+
+function addCustomTablesorterParser() {
+    $.tablesorter.addParser({
+        id: 'prefixes',
+        is: function(s) { //never checked, because 'digit' parser matches first
+            return /^10\.\d+$/.test(s);
+        },
+        format: function(s) {
+            return s.replace(/^10\./, "");
+        },
+        type: 'number'
+    });
 }
 
 function loadFilterList() {
@@ -43,14 +57,14 @@ function initTabs() {
 	});
 }
 
-function newStatsTab(id, label, init_function, next_tab, table_label) {
+function newStatsTab(id, label, init_function, next_tab, table_label, tablesorter_options) {
 	id = "tab-" + id;
 	var li = $("<li>");
 	var a = $("<a>").text(label).attr("href", "#" + id);
 	li.append(a);
 	$("#stats ul").append(li);
 	
-	var stats = newStats(id, label, init_function, next_tab, table_label);
+	var stats = newStats(id, label, init_function, next_tab, table_label, tablesorter_options);
 	a.click(function() {
 		setTimeout(stats.load, 0);
 	});
@@ -58,7 +72,7 @@ function newStatsTab(id, label, init_function, next_tab, table_label) {
 	return stats;
 }
 
-function newStats(id, label, init_function, next_tab, table_label) {
+function newStats(id, label, init_function, next_tab, table_label, tablesorter_options) {
 	var div = $("<div>").addClass("stats").attr("id", id);
 	var table = $("<table>").hide();
 	var divLoading = $("<div>").addClass("loading");
@@ -77,7 +91,7 @@ function newStats(id, label, init_function, next_tab, table_label) {
 				noresults.text("No matching results found");
 				div.append(noresults);
 			} else {
-				table.makeTableSortable();
+				table.makeTableSortable(tablesorter_options);
 				table.stickyTableHeaders();
 				$("td.number a, tr.totals .number", table).groupDigits();
 				table.setLinksToNextTab(next_tab);
