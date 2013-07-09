@@ -93,7 +93,7 @@ function newStats(id, label, init_function, next_tab, table_label, tablesorter_o
 			} else {
 				table.makeTableSortable(tablesorter_options);
 				table.stickyTableHeaders();
-				$("td.number a, tr.totals .number", table).groupDigits();
+				$("td.number a, td.number span, tr.totals .number", table).groupDigits();
 				table.setLinksToNextTab(next_tab);
 				div.setTargetForExternalLinks();
 			}

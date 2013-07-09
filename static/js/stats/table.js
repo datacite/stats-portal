@@ -36,14 +36,16 @@ $.fn.countCols = function() {
 	return $("thead tr.individual th", this).size();
 }
 
-$.fn.addCol = function(header, field, fq) {
+$.fn.addCol = function(header, field, fq, linkable) {
 	var labelFormatter = function(value) {
 		return value.split(" ")[0];
 	}
-	var uiHrefConstructor = function(data) {
-		var new_fq = field + ':"' + data + '"';
-		return makeUiHref([new_fq, fq]);
-	};
+	var uiHrefConstructor = null;
+    if (linkable == null || linkable) 
+        uiHrefConstructor = function(data) {
+            var new_fq = field + ':"' + data + '"';
+            return makeUiHref([new_fq, fq]);
+        };
 	var data = {
 		fq: fq,
 		"facet.field" : field
@@ -106,6 +108,8 @@ $.fn.addGenericCol= function(header, data, firstColFormatter, labelFormatter, ui
 				var td = $("<td>").addClass("number");
 				if (count == 0) {
 					td.text("0");
+                } else if (uiHrefConstructor == null) {
+                    td.append($("<span>").text(count));
 				} else {
 					var a = $("<a>").text(count);
 					a.attr("href", uiHrefConstructor(value));
