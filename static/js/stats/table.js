@@ -36,7 +36,7 @@ $.fn.countCols = function() {
 	return $("thead tr.individual th", this).size();
 }
 
-$.fn.addCol = function(header, field, fq, linkable) {
+$.fn.addCol = function(header, field, fqs, linkable) {
 	var labelFormatter = function(value) {
 		return value.split(" ")[0];
 	}
@@ -44,10 +44,10 @@ $.fn.addCol = function(header, field, fq, linkable) {
     if (linkable == null || linkable) 
         uiHrefConstructor = function(data) {
             var new_fq = field + ':"' + data + '"';
-            return makeUiHref([new_fq, fq]);
+            return makeUiHref(fqs.concat([new_fq]));
         };
 	var data = {
-		fq: fq,
+		fq: fqs,
 		"facet.field" : field
 	}
 	this.addGenericCol(header, data, filterLinkFormatter(field), labelFormatter, uiHrefConstructor);
@@ -132,15 +132,17 @@ $.fn.addGenericCol= function(header, data, firstColFormatter, labelFormatter, ui
 	});
 }
 
-$.fn.addRatioCol = function(header, col_dividend, col_divisor) {
+$.fn.addRatioCol = function(header, col_dividend, col_divisor, inverse) {
+    if (inverse == null) inverse = false;
 	var table = $(this);
 	table.addColHeader(header, "bars");
 	$("tbody tr", table).each(function() {
 		var row = $(this);
 		var dividend = $("td", row).eq(col_dividend).text();
 		var divisor = $("td", row).eq(col_divisor).text();
-		var ratio = Math.floor(100 * dividend / divisor);
-		var td = $("<td>").addClass("number").text(ratio + "%");
+		var ratio = 100 * dividend / divisor;
+        if (inverse) ratio = 100 - ratio;
+		var td = $("<td>").addClass("number").text(Math.floor(ratio) + "%");
 		row.append(td);
 	});
 	table.addColTotals("");
