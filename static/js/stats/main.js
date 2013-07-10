@@ -120,18 +120,20 @@ function newStats(id, label, init_function, next_tab, table_label, tablesorter_o
 
 function initMainStats(group_field) { 
 	return function(stats) {
-		stats.table.addColGroup("DOI Registrations", 4);
-		stats.table.addCol("All Time", group_field);
-		stats.table.addCol("This Year", group_field, "minted:[NOW/YEAR TO *]");
-		stats.table.addCol("Last 30 Days", group_field, "minted:[NOW-30DAYS/DAY TO *]");
-		stats.table.addCol("Last 7 Days", group_field, "minted:[NOW-7DAYS/DAY TO *]");
-		stats.table.addColGroup("Metadata Uploads", 4);
-		stats.table.addCol("All Time", group_field, "has_metadata:true");
-		stats.table.addCol("This Year", group_field, "uploaded:[NOW/YEAR TO *]");
-		stats.table.addCol("Last 30 Days", group_field, "uploaded:[NOW-30DAYS/DAY TO *]");
-		stats.table.addCol("Last 7 Days", group_field, "uploaded:[NOW-7DAYS/DAY TO *]");
-		stats.table.addRatioCol("Metadata Ratio", 5, 1);
-		stats.table.removeRowsWithZeros([1,5]);
+        stats.table.addColGroup("DOI Registrations", 4);
+        stats.table.addCol("Total",         group_field, [], false);
+        stats.table.addCol("This Year",     group_field, ["minted:[NOW/YEAR TO *]"], false);
+        stats.table.addCol("Last 30 Days",  group_field, ["minted:[NOW-30DAYS/DAY TO *]"], false);
+        stats.table.addCol("Last 7 Days",   group_field, ["minted:[NOW-7DAYS/DAY TO *]"], false);
+
+        stats.table.addColGroup("Metadata", 4);
+        stats.table.addCol("Searchable", group_field, ["has_metadata:true", "is_active:true"], true);
+        stats.table.addCol("Hidden",     group_field, ["has_metadata:True", "is_active:false"], false);
+        stats.table.addCol("Missing",    group_field, ["has_metadata:false"], false);
+
+        stats.table.addRatioCol("Ratio", 6, 1, true);
+
+        stats.table.removeRowsWithZeros([1,5]);
 	}
 };
 
