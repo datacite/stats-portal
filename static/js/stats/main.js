@@ -121,7 +121,7 @@ function newStats(id, label, init_function, next_tab, table_label, tablesorter_o
 function initMainStats(group_field) { 
 	return function(stats) {
         stats.table.addColGroup("DOI Registrations", 4);
-        stats.table.addCol("Total",         group_field, [], false);
+        stats.table.addCol("Total",         group_field, [], false, "bold");
         stats.table.addCol("This Year",     group_field, ["minted:[NOW/YEAR TO *]"], false);
         stats.table.addCol("Last 30 Days",  group_field, ["minted:[NOW-30DAYS/DAY TO *]"], false);
         stats.table.addCol("Last 7 Days",   group_field, ["minted:[NOW-7DAYS/DAY TO *]"], false);

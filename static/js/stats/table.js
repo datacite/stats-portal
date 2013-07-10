@@ -36,7 +36,7 @@ $.fn.countCols = function() {
 	return $("thead tr.individual th", this).size();
 }
 
-$.fn.addCol = function(header, field, fqs, linkable) {
+$.fn.addCol = function(header, field, fqs, linkable, css_class) {
 	var labelFormatter = function(value) {
 		return value.split(" ")[0];
 	}
@@ -50,7 +50,7 @@ $.fn.addCol = function(header, field, fqs, linkable) {
 		fq: fqs,
 		"facet.field" : field
 	}
-	this.addGenericCol(header, data, filterLinkFormatter(field), labelFormatter, uiHrefConstructor);
+	this.addGenericCol(header, data, filterLinkFormatter(field), labelFormatter, uiHrefConstructor, css_class);
 }
 
 $.fn.addFacetCol = function(header, field) {
@@ -84,7 +84,7 @@ $.fn.addDateCol = function(header, field, format, gap, aggregation) {
 		this.addAggregationCol(aggregation, this.countCols() - 1, uiHrefAggregationConstructor);
 }
 
-$.fn.addGenericCol= function(header, data, firstColFormatter, labelFormatter, uiHrefConstructor) {
+$.fn.addGenericCol= function(header, data, firstColFormatter, labelFormatter, uiHrefConstructor, css_class) {
 	var table = this;
 	var rows = $("tbody tr", table);
 	var hasRows = rows.size() != 0;
@@ -106,6 +106,7 @@ $.fn.addGenericCol= function(header, data, firstColFormatter, labelFormatter, ui
 				var count = $.trim(cols[1]);
 				
 				var td = $("<td>").addClass("number");
+                if (css_class != null) td.addClass(css_class);
 				if (count == 0) {
 					td.text("0");
                 } else if (uiHrefConstructor == null) {
