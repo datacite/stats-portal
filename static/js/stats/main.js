@@ -131,7 +131,7 @@ function initMainStats(group_field) {
         stats.table.addCol("Hidden",     group_field, ["has_metadata:True", "is_active:false"], false);
         stats.table.addCol("Missing",    group_field, ["has_metadata:false"], false);
 
-        stats.table.addRatioCol("Ratio", 6, 1, true);
+        stats.table.addRatioCol("Ratio", 7, 1, true);
 
         stats.table.removeRowsWithZeros([1,5]);
 	}
