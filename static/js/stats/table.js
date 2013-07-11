@@ -84,6 +84,50 @@ $.fn.addDateCol = function(header, field, format, gap, aggregation) {
 		this.addAggregationCol(aggregation, this.countCols() - 1, uiHrefAggregationConstructor);
 }
 
+$.fn.addMinMaxCols = function(header, field, stats_field) {
+	var table = this;
+	var rows = $("tbody tr", table);
+    var data = {
+        "facet.field" : field,
+        "stats" : "on",
+        "stats.field" : stats_field,
+        "stats.facet" : field
+    }
+
+	table.addColHeader(header[0]);
+	table.addColHeader(header[1]);
+    table.addColTotals("");
+    table.addColTotals("");
+
+    var dateFormatter = function(str) {
+        var mom = moment(str, "ddd MMM DD HH:mm:ss - YYYY");
+        return mom == null ? "" : mom.format("YYYY-MM-DD");
+    };
+	
+	$.ajax({
+		type : "GET",
+		url : getListUrl(),
+		dataType : "text",
+		cache : false,
+		data : data,
+		async : false,
+		success : function(data) {
+			var lines = data.split("\n");
+			for (i = 0; i < lines.length - 1; i++) {
+				var cols = lines[i].split(";");
+                var min = $.trim(cols[2]);
+                var max = $.trim(cols[3]);
+				
+				var td_min = $("<td>").addClass("date").text(dateFormatter(min));
+				var td_max = $("<td>").addClass("date").text(dateFormatter(max));
+				rows.eq(i).append(td_min, td_max);
+			}
+		}
+	});
+
+
+}
+
 $.fn.addGenericCol= function(header, data, firstColFormatter, labelFormatter, uiHrefConstructor, css_class) {
 	var table = this;
 	var rows = $("tbody tr", table);

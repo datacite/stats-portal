@@ -57,7 +57,7 @@ h1 img {
 }
 
 
-td.number {
+td.number, td.date {
     text-align: right;
 }
 
