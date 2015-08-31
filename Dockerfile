@@ -1,8 +1,3 @@
-FROM datacite1/nginx
+FROM nginx:1.9.4
 
-EXPOSE 80
-
-VOLUME [ "/var/log/nginx/" ]
-VOLUME [ "/var/www/website/resolution-report/" ]
-
-COPY static /var/www/website
+COPY static /usr/share/nginx/html
