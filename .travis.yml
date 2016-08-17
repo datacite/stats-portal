@@ -1,0 +1,38 @@
+language: ruby
+cache: bundler
+rvm:
+  - 2.3.1
+
+before_install:
+  - set -e
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+      AWS_BUCKET="stats.datacite.org";
+    elif [ "$TRAVIS_BRANCH" == "labs" ]; then
+      AWS_BUCKET="stats.labs.datacite.org";
+    else
+      exit 1;
+    fi
+  - rvm install 2.2.0
+
+before_script:
+  - cd vendor && npm install
+  - cd ../
+
+script:
+  - bundle exec middleman build
+
+deploy:
+  provider: s3
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
+  bucket: $AWS_BUCKET
+  local-dir: build
+  acl: public_read
+  skip_cleanup: true
+  region: eu-west-1
+  detect_encoding: true
+  on:
+    all_branches: true
+
+notifications:
+  slack: datacite:Wt8En0ALoTA6Kjc5EOKNDWxN
