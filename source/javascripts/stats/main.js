@@ -30,7 +30,8 @@ function addCustomTablesorterParser() {
 }
 
 function loadFilterList() {
-	$("#filters").load_sync("proxy/search/list/filters-html" + window.location.search, function() {
+	// $("#filters").load_sync("proxy/search/list/filters-html" + window.location.search, function() {
+	$("#filters").load_sync(" http://search.datacite.org/list/filters-html" + window.location.search, function() {
 		$(this).toggle($(".filter", this).size() > 0);
 		setNextLinkForFilterList();
 	});

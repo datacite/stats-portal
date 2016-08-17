@@ -9,10 +9,10 @@ function init() {
 	newStatsTab("prefixes", "Registrations by Prefixes", initMainStats("prefix"), "resolution-report", "Prefixes", {headers: { 0: { sorter:'prefixes' }}});
 //	newStatsTab("link-checker", "Link Checker", initLinkChecker);
 	newStatsTab("resolution-report", "Resolutions by Month", initResolutionReportList);
-	
+
 //	newStatsTab("history-year", "Annual History", initHistoryStats("+1YEAR", "per year", "%y"));
 //	newStatsTab("history-month", "Monthly History", initHistoryStats("+1MONTH", "per month", "%b %y"));
-	
+
 	initTabs();
 }
 
@@ -63,7 +63,7 @@ function newStatsTab(id, label, init_function, next_tab, table_label, tablesorte
 	var a = $("<a>").text(label).attr("href", "#" + id);
 	li.append(a);
 	$("#stats ul").append(li);
-	
+
 	var stats = newStats(id, label, init_function, next_tab, table_label, tablesorter_options);
 	a.click(function() {
 		setTimeout(stats.load, 0);
@@ -99,16 +99,16 @@ function newStats(id, label, init_function, next_tab, table_label, tablesorter_o
 			}
 		}
 	};
-	obj.load = function () { 
+	obj.load = function () {
 		if (obj.loading)
 			return;
 		div.show();
 		if (!obj.loaded) {
 			obj.loading = true;
-			
+
 			init_function(obj);
 			table.show();
-			
+
 			obj.finish();
 			obj.loaded = true;
 			obj.loading = false;
@@ -118,7 +118,7 @@ function newStats(id, label, init_function, next_tab, table_label, tablesorter_o
 	return obj;
 }
 
-function initMainStats(group_field) { 
+function initMainStats(group_field) {
 	return function(stats) {
         stats.table.addColGroup("DOI Registrations", 6);
         stats.table.addCol("Total",         group_field, [], false, "bold");
@@ -134,12 +134,12 @@ function initMainStats(group_field) {
 
         stats.table.addRatioCol("Ratio", 9, 1, true);
 
-        
+
         stats.table.removeRowsWithZeros([1]);
 	}
 };
 
-function initHistoryStats(gap, header, label) { 
+function initHistoryStats(gap, header, label) {
 	return function(hist) {
 		hist.table.addColGroup("minted", 2);
 		hist.table.addDateCol(header, "minted", label, gap, "aggregated");
@@ -167,7 +167,7 @@ function initResolutionReportList(tab) {
 	var reports = {};
 	var select = $("<select>");
 	tab.div.append(select);
-	
+
 	$("a", list).reverse().each(function() {
 		var a = $(this);
 		var file = basename(a.attr("href"));
@@ -259,7 +259,7 @@ $.fn.applyFilters = function (filters) {
 	$("#filters .filter").each(function() {
 		var name = $.trim($(".name", this).text());
 		var val = $.trim($(".value", this).text());
-		
+
 		if (name == "allocator" && filters.allocator) {
 			var symbol = val.split(" ")[0];
 			table.filterRows(function() { return filters.allocator(this, symbol) });
