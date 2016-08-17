@@ -27,6 +27,9 @@ end
 # Helpers
 ###
 
+# use asset host
+activate :asset_host, host: "//#{ENV['CDN_HOST']}"
+
 # Methods defined in the helpers block are available in templates
 # helpers do
 #   def some_helper

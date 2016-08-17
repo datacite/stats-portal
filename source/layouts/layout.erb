@@ -10,11 +10,28 @@
 
     <link href='//fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
 
-    <%= stylesheet_link_tag :site %>
-    <%= javascript_include_tag :all %>
+    <!-- <%= stylesheet_link_tag :site %> -->
+    <!-- <%= javascript_include_tag :all %> -->
+    <%= javascript_include_tag 'browser-support' %>
+    <%= javascript_include_tag 'jquery-1.5.2.min' %>
+    <%= javascript_include_tag 'jquery-ui-1.8.18.custom.min' %>
+    <%= javascript_include_tag 'jquery-custom' %>
+    <%= javascript_include_tag 'jquery.tablesorter.min' %>
+    <%= javascript_include_tag 'jquery.stickytableheaders' %>
+    <%= javascript_include_tag 'jquery.flot.min' %>
+    <%= javascript_include_tag 'jquery.flot.pie.min' %>
+    <%= javascript_include_tag 'moment.min' %>
+    <%= javascript_include_tag 'stats/util' %>
+    <%= javascript_include_tag 'stats/table' %>
+    <%= javascript_include_tag 'stats/chart' %>
+    <%= javascript_include_tag 'stats/main' %>
+    <%= stylesheet_link_tag 'jquery-ui-1.8.18.custom' %>
+    <%= stylesheet_link_tag 'stats' %>
+    <%= stylesheet_link_tag 'tablesorter/style' %>
   </head>
 
-  <body class="<%= page_classes %>">
+  <!-- <body class="<%= page_classes %>"> -->
+  <body>
     <%= yield %>
   </body>
 </html>
