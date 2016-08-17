@@ -15,8 +15,8 @@ before_install:
   - rvm install 2.2.0
 
 before_script:
-  - cd vendor && npm install
-  - cd ../
+  # - cd vendor && npm install
+  # - cd ../
 
 script:
   - bundle exec middleman build
