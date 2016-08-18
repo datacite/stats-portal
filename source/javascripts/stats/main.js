@@ -281,7 +281,7 @@ $.fn.setTargetForExternalLinks = function() {
 }
 
 function throbber() {
- 	return $('<img src="img/throbber-transparent.gif" class="loading" alt="spinning wheel"/>');
+ 	return $('<img src="../../images/throbber-transparent.gif" class="loading" alt="spinning wheel"/>');
 }
 
 $(document).ready(init);

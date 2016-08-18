@@ -21,6 +21,7 @@ page '/*.txt', layout: false
 # Reload the browser automatically whenever files change
 configure :development do
   activate :livereload
+  # activate :dotenv
 end
 
 ###
@@ -29,6 +30,7 @@ end
 
 # use asset host
 activate :asset_host, host: "//#{ENV['CDN_HOST']}"
+
 
 # Methods defined in the helpers block are available in templates
 # helpers do
