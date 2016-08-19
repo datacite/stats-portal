@@ -28,6 +28,14 @@
     <%= stylesheet_link_tag 'jquery-ui-1.8.18.custom' %>
     <%= stylesheet_link_tag 'stats' %>
     <%= stylesheet_link_tag 'tablesorter/style' %>
+
+    <% if ENV['BUGSNAG_JS_KEY'] %>
+      <script
+        src="//d2wy8f7a9ursnm.cloudfront.net/bugsnag-2.min.js"
+        data-apikey="<%= ENV['BUGSNAG_JS_KEY'] %>">
+      </script>
+    <% end %>
+
   </head>
 
   <!-- <body class="<%= page_classes %>"> -->

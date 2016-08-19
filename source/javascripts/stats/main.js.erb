@@ -163,7 +163,7 @@ function initLinkChecker(tab) {
 
 function initResolutionReportList(tab) {
 	var list = $("<div>");
-	list.load_sync("resolution-report/index.html a");
+	list.load_sync("<%= ENV['RESOLUTION_URL'] %>/index.html a");
 
 	var reports = {};
 	var select = $("<select>");
@@ -198,7 +198,7 @@ function initResolutionReportList(tab) {
 
 function initResolutionReport(file) {
 	return function(rr) {
-		rr.table.load_sync("resolution-report/" + file + " thead,tbody");
+		rr.table.load_sync("<%= ENV['RESOLUTION_URL'] %>/" + file + " thead,tbody");
 		applyFilterResolutionReport(rr);
 		rr.table.initFooter();
 		rr.table.addColTotals("");
