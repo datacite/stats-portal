@@ -53,7 +53,8 @@ Array.prototype.clean = function() {
 
 
 function getListUrl() {
-	return "proxy/search/list/generic?" + getQueryString();
+	// return "proxy/search/list/generic?" + getQueryString();
+	return "http://search.datacite.org/list/generic?" + getQueryString();
 }
 
 function makeUiHref(fq) {
@@ -61,7 +62,8 @@ function makeUiHref(fq) {
 		q : "*",
 		fq : fq.clean()
 	};
-	return "proxy/search/ui?" + $.param(params) + "&" + getQueryString();
+	// return "proxy/search/ui?" + $.param(params) + "&" + getQueryString();
+	return "http://search.datacite.org/ui?" + $.param(params) + "&" + getQueryString();
 }
 
 function makeDateSpanUiHref(field, from, to, gap) {

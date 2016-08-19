@@ -30,7 +30,8 @@ function addCustomTablesorterParser() {
 }
 
 function loadFilterList() {
-	$("#filters").load_sync("proxy/search/list/filters-html" + window.location.search, function() {
+	// $("#filters").load_sync("proxy/search/list/filters-html" + window.location.search, function() {
+	$("#filters").load_sync(" http://search.datacite.org/list/filters-html" + window.location.search, function() {
 		$(this).toggle($(".filter", this).size() > 0);
 		setNextLinkForFilterList();
 	});
@@ -280,7 +281,7 @@ $.fn.setTargetForExternalLinks = function() {
 }
 
 function throbber() {
- 	return $('<img src="img/throbber-transparent.gif" class="loading" alt="spinning wheel"/>');
+ 	return $('<img src="../../images/throbber-transparent.gif" class="loading" alt="spinning wheel"/>');
 }
 
 $(document).ready(init);
