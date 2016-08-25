@@ -108,7 +108,7 @@ $.fn.addMinMaxCols = function(header, field, stats_field) {
 		type : "GET",
 		url : getListUrl(),
 		dataType : "text",
-		cache : false,
+		cache : true,
 		data : data,
 		async : false,
 		success : function(data) {
@@ -139,7 +139,7 @@ $.fn.addGenericCol= function(header, data, firstColFormatter, labelFormatter, ui
 		type : "GET",
 		url : getListUrl(),
 		dataType : "text",
-		cache : false,
+		cache : true,
 		data : data,
 		async : false,
 		success : function(data) {
