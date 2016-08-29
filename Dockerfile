@@ -33,8 +33,8 @@ RUN chown -R app:app /home/app/webapp && \
 # RUN /sbin/setuser app npm install
 
 # Install Ruby gems via bundler, run as app user
-# WORKDIR /home/app/webapp
-# RUN /sbin/setuser app bundle install --path vendor/bundle --without development
+WORKDIR /home/app/webapp
+RUN /sbin/setuser app bundle install --path vendor/bundle --without development
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
