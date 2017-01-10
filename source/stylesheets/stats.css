@@ -134,3 +134,12 @@ a {
 .bold {
     font-weight: bold;
 }
+
+
+#ui-state-default ui-corner-top ul{
+  list-style: none;
+}
+
+#ui-state-default ui-corner-top li{
+  display: inline;
+}

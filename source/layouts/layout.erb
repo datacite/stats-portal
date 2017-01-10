@@ -13,7 +13,8 @@
     <!-- <%= stylesheet_link_tag :site %> -->
     <!-- <%= javascript_include_tag :all %> -->
     <%= javascript_include_tag 'browser-support' %>
-    <%= javascript_include_tag 'jquery-1.5.2.min' %>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <!-- <%= javascript_include_tag 'jquery-1.5.2.min' %> -->
     <%= javascript_include_tag 'jquery-ui-1.8.18.custom.min' %>
     <%= javascript_include_tag 'jquery-custom' %>
     <%= javascript_include_tag 'jquery.tablesorter.min' %>
@@ -26,8 +27,19 @@
     <%= javascript_include_tag 'stats/chart' %>
     <%= javascript_include_tag 'stats/main' %>
     <%= stylesheet_link_tag 'jquery-ui-1.8.18.custom' %>
-    <%= stylesheet_link_tag 'stats' %>
+    <!-- <%= stylesheet_link_tag 'stats' %> -->
     <%= stylesheet_link_tag 'tablesorter/style' %>
+
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,600,400italic,600italic" rel="stylesheet" type="text/css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="//assets.datacite.org/stylesheets/datacite.css" rel="stylesheet" type="text/css">
+
+
+
+
+
 
     <% if ENV['BUGSNAG_JS_KEY'] %>
       <script
@@ -51,9 +63,12 @@
 
 
   </head>
+  <%= partial "includes/header.html.erb" %>
 
   <!-- <body class="<%= page_classes %>"> -->
   <body>
     <%= yield %>
   </body>
+
+    <%= partial "includes/footer.html.erb" %>
 </html>
