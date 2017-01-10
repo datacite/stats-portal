@@ -17,7 +17,8 @@ ENV RACK_ENV development
 # CMD ["/sbin/my_init"]
 
 # Update installed APT packages
-RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
+RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold"&& \
+    apt-get install -y pandoc
 
 # Install bundler
 RUN gem install bundler
@@ -33,8 +34,8 @@ RUN chown -R app:app /home/app/webapp && \
 # RUN /sbin/setuser app npm install
 
 # Install Ruby gems via bundler, run as app user
-# WORKDIR /home/app/webapp
-# RUN /sbin/setuser app bundle install --path vendor/bundle --without development
+WORKDIR /home/app/webapp
+RUN /sbin/setuser app bundle install --path vendor/bundle --without development
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

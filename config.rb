@@ -21,8 +21,11 @@ page '/*.txt', layout: false
 # Reload the browser automatically whenever files change
 configure :development do
   activate :livereload
-
 end
+
+# Set markdown template engine
+set :markdown_engine, :pandoc
+set :markdown, smartypants: true
 
 ###
 # Helpers

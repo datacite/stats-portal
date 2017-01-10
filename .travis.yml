@@ -12,14 +12,17 @@ before_install:
     else
       exit 1;
     fi
-  - rvm install 2.2.0
+
+  - wget https://github.com/jgm/pandoc/releases/download/1.15.2/pandoc-1.15.2-1-amd64.deb
+  - sudo dpkg -i pandoc-1.15.2-1-amd64.deb
+  - rm pandoc-1.15.2-1-amd64.deb
 
 before_script:
   # - cd vendor && npm install
   # - cd ../
 
 script:
-  - bundle exec middleman build
+  - bundle exec middleman build -e production
 
 deploy:
   provider: s3
