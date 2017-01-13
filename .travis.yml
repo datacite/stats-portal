@@ -7,8 +7,10 @@ before_install:
   - set -e
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
       AWS_BUCKET="stats.datacite.org";
-    elif [ "$TRAVIS_BRANCH" == "labs" ]; then
-      AWS_BUCKET="stats.labs.datacite.org";
+      RACK_ENV="production";
+    elif [ "$TRAVIS_BRANCH" == "test" ]; then
+      AWS_BUCKET="stats.test.datacite.org";
+      RACK_ENV="stage";
     else
       exit 1;
     fi
@@ -22,7 +24,7 @@ before_script:
   # - cd ../
 
 script:
-  - bundle exec middleman build -e production
+  - bundle exec middleman build -e $RACK_ENV
 
 deploy:
   provider: s3
