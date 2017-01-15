@@ -8,9 +8,11 @@ before_install:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
       AWS_BUCKET="stats.datacite.org";
       RACK_ENV="production";
+      cp .env.master .env;
     elif [ "$TRAVIS_BRANCH" == "test" ]; then
       AWS_BUCKET="stats.test.datacite.org";
       RACK_ENV="stage";
+      cp .env.stage .env;
     else
       exit 1;
     fi
