@@ -1,5 +1,11 @@
 .DS_Store
-.env
-.env.*
-!.env.example
-!.env.travis
+
+# Ignore bundler config
+/.bundle
+
+# Ignore the build directory
+/build
+
+# Ignore cache
+/.sass-cache
+/.cache
