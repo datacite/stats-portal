@@ -3,14 +3,14 @@ table.tablesorter {
 	font-family:arial;
 	background-color: #CDCDCD;
 	margin:10px 0pt 15px;
-	font-size: 9pt;
+	font-size: 10pt;
 	width: 100%;
 	text-align: left;
 }
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 	background-color: #e6EEEE;
 	border: 1px solid #FFF;
-	font-size: 10pt;
+	font-size: 11pt;
 	padding: 4px;
 }
 table.tablesorter thead tr .header {
@@ -23,7 +23,7 @@ table.tablesorter thead tr .header {
 table.tablesorter tbody td {
 	color: #3D3D3D;
 	padding: 4px;
-	background-color: #FFF;
+	/*background-color: #FFF;*/
 	vertical-align: top;
 }
 table.tablesorter tbody tr.odd td {
@@ -38,3 +38,6 @@ table.tablesorter thead tr .headerSortDown {
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 background-color: #8dbdd8;
 }
+
+tr:nth-child(even) {background: #eff0f1}
+tr:nth-child(odd) {background: #FFF}
