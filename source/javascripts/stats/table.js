@@ -275,7 +275,7 @@ $.fn.addColTotals = function(sum, col) {
 $.fn.makeTableSortable = function(options) {
 	var default_options = {
 		sortInitialOrder : 'desc',
-		sortList : [[0,0]]
+		sortList : [[0,0],[4,1]]
 	};
 
 	var cur_options = $.extend({},default_options,options);
