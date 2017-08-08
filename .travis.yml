@@ -27,6 +27,7 @@ before_script:
 
 script:
   - bundle exec middleman build -e $RACK_ENV
+  - bundle exec htmlproofer --http-status-ignore "999" --url-ignore "#" ./build
 
 deploy:
   provider: s3
