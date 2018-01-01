@@ -23,6 +23,7 @@ before_install:
   - rm pandoc-1.15.2-1-amd64.deb
 
 install:
+  - bundle install
   - sudo pip install awscli
 
 script:
