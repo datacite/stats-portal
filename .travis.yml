@@ -10,11 +10,13 @@ before_install:
       AWS_BUCKET="stats.datacite.org";
       RACK_ENV="production";
       cp .env.master .env;
+      AUTO_DEPLOY=true;
     elif [ "$TRAVIS_BRANCH" == "master" ]; then
       AWS_BUCKET="stats.test.datacite.org";
       RACK_ENV="stage";
       CLOUDFRONT_DISTRIBUTION_ID=$CLOUDFRONT_DISTRIBUTION_ID_TEST;
       cp .env.stage .env;
+      AUTO_DEPLOY=true;
     else
       AUTO_DEPLOY=false;
     fi
@@ -42,7 +44,7 @@ deploy:
   region: eu-west-1
   detect_encoding: true
   on:
-    branch: master
+    condition: $AUTO_DEPLOY = true
 
 after_deploy:
   - export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY
