@@ -23,7 +23,7 @@ before_install:
   - rm pandoc-1.15.2-1-amd64.deb
 
 install:
-  - pip install awscli
+  - sudo pip install awscli
 
 script:
   - bundle exec middleman build -e $RACK_ENV
