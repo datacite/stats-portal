@@ -1,4 +1,42 @@
 
+
+var apiUrl = "http://localhost:8065/"
+
+var ajaxConfig = {
+  method:"get", 
+  cache: "force-cache"
+ };
+
+function displayProviders(task) {
+  table.setData(apiUrl+"providers/totals",{}, ajaxConfig);
+  ga('send', {
+    hitType: 'event',
+    eventCategory: 'stats',
+    eventAction: 'providers',
+    eventLabel: 'allproviders'
+  });  
+}
+
+function displayClients(task) {
+  table.setData(apiUrl+"clients/totals",{}, ajaxConfig);
+  ga('send', {
+    hitType: 'event',
+    eventCategory: 'stats',
+    eventAction: 'clients',
+    eventLabel: 'allclients'
+  });  
+}
+
+function displayPrefixes(task) {
+  table.setData(apiUrl+"prefixes/totals",{}, ajaxConfig);
+  ga('send', {
+    hitType: 'event',
+    eventCategory: 'stats',
+    eventAction: 'prefixes',
+    eventLabel: 'allprefixes'
+  });  
+}
+
 function FindTaskById(task) {
 
   if (task.id === this[0]) {
@@ -6,29 +44,53 @@ function FindTaskById(task) {
   }
 }
 
-function goToSearch(id) {
-  console.log(id);
-  console.log(id.explicitOriginalTarget.innerText);
-  window.open("http://localhost:8065/clients?provider-id=" + id.explicitOriginalTarget.innerText); 
+function goToClients(cell) {
+  console.log(cell);
+  var provider = cell.originalTarget.textContent.toLowerCase();
+  table.setData(apiUrl+"clients/totals?provider-id=" + provider,{}, ajaxConfig);
+  ga('send', {
+    hitType: 'event',
+    eventCategory: 'stats',
+    eventAction: 'filterProvider',
+    eventLabel: provider
+  });  
+}
 
+function goToPrefixes(cell) {
+  console.log(cell);
+  var client = cell.originalTarget.textContent.toLowerCase();
+  table.setData(apiUrl+"prefixes/totals?client-id=" + client,{}, ajaxConfig);
+  ga('send', {
+    hitType: 'event',
+    eventCategory: 'stats',
+    eventAction: 'filterClient',
+    eventLabel: client
+  });  
+}
+
+function FindTaskById(task) {
+
+  if (task.id === this[0]) {
+      return task;
+  }
+}
+
+function getCsv(){
+  table.download("csv", "data.csv");
+  ga('send', {
+    hitType: 'event',
+    eventCategory: 'stats',
+    eventAction: 'download',
+    eventLabel: 'csv'
+  });  
 }
 
 
-
-
 var table = new Tabulator("#doi-production-table", {
-  // data:myList2,
+  responsiveLayout:true,
+  layout:"fitColumns",
   ajaxResponse:function(url, params, response){
-    //url - the URL of the request
-    //params - the parameters passed with the request
-    //response - the JSON object returned in the body of the response.
 
-    function FindTaskById(task) {
-
-      if (task.id === this[0]) {
-          return task;
-      }
-    }
     
     
     var myList2 = response.map(function(element) {
@@ -60,7 +122,7 @@ var table = new Tabulator("#doi-production-table", {
         draft = {"count":"0"}
       }
     
-      return {"allocator": element.id, 
+      return {"id": element.id, 
         "total": element.count, 
         "findable": findable.count, 
         "registered": registered.count, 
@@ -72,26 +134,18 @@ var table = new Tabulator("#doi-production-table", {
       };
     });
 
-    return myList2; //return the tableData property of a response json object
+    return myList2; 
   },
   columns:[
-      {title:"Member", field:"allocator", sorter:"string", width:500, editor:false, cellClick:goToSearch},
-      {title:"Total", field:"total", sorter:"string", align:"right", formatter:"number", bottomCalc:"sum"},
-      {title:"2019", field:"this_year", align:"right", formatter:"number", bottomCalc:"sum"},
-      {title:"2018", field:"last_year", align:"right", formatter:"number", bottomCalc:"sum"},
-      {title:"This month", field:"this_month", align:"right", formatter:"number"},
-      {title:"Findable", field:"findable", align:"right", formatter:"number"},
-      {title:"Registered", field:"registered", align:"right", formatter:"number", bottomCalc:"sum"},
-      {title:"Draft", field:"draft", align:"right", formatter:"number", bottomCalc:"sum"},],
+      {title:"Name", field:"id", sorter:"string", cellClick:goToClients,responsive:0},
+      {title:"Total", field:"total", sorter:"string", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false}},
+      {title:"2019", field:"this_year", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false}},
+      {title:"2018", field:"last_year", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false}},
+      {title:"This month", field:"this_month", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false}},
+      {title:"Findable", field:"findable", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false}},
+      {title:"Registered", field:"registered", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false}},
+      {title:"Draft", field:"draft", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false}},],
 });
 
-var ajaxConfig = {
-  method:"get", //set request type to Position
-  cache: "force-cache",
-  headers: {
-      "Authorization": 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJ1aWQiOiIwMDAwLTAwMDEtNTQ4OS0zNTk0IiwibmFtZSI6ImRhdGFvbmUiLCJwcm92aWRlcl9pZCI6ImNkbCIsImNsaWVudF9pZCI6ImNkbC5kYXRhb25lIiwicm9sZV9pZCI6InN0YWZmX2FkbWluIiwiaWF0IjoxNTM4NDk2MDcxLCJleHAiOjE4MTgxODE4MTgxODI4MjgyMjkzOTM1OTgyOTQwNTE1fQ.wp12DEEB3iho9Iy0t-eoeA9pipdvBsKcOdXezSDIE-8TX90_2bjnRnT10V5VciJs7O3hZjbaWYTbpp-jIiLw5ib-uyfoR8Yl00XrelzyMT0Jgd6hU8BP2QhWtR_GWTJREXx3-rTWOBYGcKF0ptRMtKn8K0uuth4EMuySnakVDQYmPwzoocjC5LP2UEXq3cy2qE8j-JIU5XZwvkWHv7R_UVuGrFr9GFJdvY7Fy7K45uM9xXJyqqruZj9oyS5U0-SugHVgVlMz0JrFSCRX0CUVVLTF_09RgUMgWoINzs2sI84EHFfs1QnL5X5gyMn-8zhsb-qDts5D409xwCPBg8ydaA', //set specific content type
-  },
-};
-
-table.setData("http://localhost:8065/providers/totals",{}, ajaxConfig);
-// table.setData("https://api.datatcite.org/providers/totals",{}, ajaxConfig);
+table.setData(apiUrl + "providers/totals",{}, ajaxConfig);
+table.setSort("id", "asc");
