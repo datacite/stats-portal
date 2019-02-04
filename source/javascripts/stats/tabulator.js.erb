@@ -89,6 +89,7 @@ var table = new Tabulator("#doi-production-table", {
       var draft = (typeof draft === 'undefined') ? {"count":"0"} : draft;
 
       return {"id": element.id, 
+       "title": element.title, 
         "total": element.count, 
         "findable": findable.count, 
         "registered": registered.count, 
@@ -102,19 +103,20 @@ var table = new Tabulator("#doi-production-table", {
     return myList2; 
   },
   columns:[
-      {title:"Name", field:"id", sorter:"string", cellClick:goToClients,responsive:0},
-      {title:"DOI Registrations", align:"center",
+    {title:"ID", field:"id", sorter:"string", cellClick:goToClients,responsive:0},
+    {title:"Name", field:"title", minWidth:350, responsive:0},
+    {title:"DOI Registrations", align:"center",
       columns:[
-      {title:"Total", field:"total", sorter:"string", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false}},
-      {title:"2019", field:"this_year", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false}},
-      {title:"2018", field:"last_year", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false}},
-      {title:"This month", field:"this_month", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false}},
+      {title:"Total", field:"total", sorter:"string", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
+      {title:"2019", field:"this_year", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
+      {title:"2018", field:"last_year", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
+      {title:"This month", field:"this_month", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
    ]},
     {title:"DOI Metadata", align:"center",
       columns:[
-      {title:"Findable", field:"findable", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false}},
-      {title:"Registered", field:"registered", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false}},
-      {title:"Draft", field:"draft", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false}},
+      {title:"Findable", field:"findable", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
+      {title:"Registered", field:"registered", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
+      {title:"Draft", field:"draft", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
   ]}
   ]},
 );
