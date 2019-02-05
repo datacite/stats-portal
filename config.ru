@@ -10,4 +10,14 @@ FileUtils.mkdir('log') unless File.exist?('log')
 
 app = ::Middleman::Application.new
 
+require 'rack/cors'
+use Rack::Cors do
+  allow do
+    origins '*'
+    resource '*',
+      headers: :any,
+      methods: [:get, :post, :put, :patch, :delete, :options, :head]
+  end
+end
+
 run ::Middleman::Rack.new(app).to_app
