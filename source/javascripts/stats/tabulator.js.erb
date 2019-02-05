@@ -127,16 +127,16 @@ var table = new Tabulator("#doi-production-table", {
     {title:"Name", field:"title", minWidth:350, responsive:0},
     {title:"DOI Registrations", align:"center",
       columns:[
-      {title:"Total", field:"total", sorter:"string", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
-      {title:"2019", field:"this_year", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
-      {title:"2018", field:"last_year", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
-      {title:"This month", field:"this_month", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
+      {title:"Total", field:"total", sorter:"string", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false,formatter:"money", thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
+      {title:"2019", field:"this_year", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, formatter:"money",thousand:","}},
+      {title:"2018", field:"last_year", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, formatter:"money",thousand:","}},
+      {title:"This month", field:"this_month", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false,formatter:"money", thousand:","}},
    ]},
     {title:"DOI Metadata", align:"center",
       columns:[
-      {title:"Findable", field:"findable", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
-      {title:"Registered", field:"registered", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
-      {title:"Draft", field:"draft", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
+      {title:"Findable", field:"findable", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, formatter:"money",thousand:","}},
+      {title:"Registered", field:"registered", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, formatter:"money",thousand:","}},
+      {title:"Draft", field:"draft", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, formatter:"money",thousand:","}},
   ]}
   ]}
 );
