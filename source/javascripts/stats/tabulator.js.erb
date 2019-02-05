@@ -3,7 +3,7 @@
 var apiUrl = "<%= ENV['API_URL'] %>";
 
 var ajaxConfig = {
-  method:"get", 
+  method:"get",
   cache: "force-cache"
  };
 
@@ -18,7 +18,7 @@ function goToClients(cell) {
   console.log(cell);
   var provider = cell.originalTarget.textContent.toLowerCase();
   table.setData(apiUrl+"/clients/totals?provider-id=" + provider,{}, ajaxConfig);
-  ga('send', {
+  ga("send", {
     hitType: 'event',
     eventCategory: 'stats',
     eventAction: 'filterProvider',
@@ -30,7 +30,7 @@ function goToPrefixes(cell) {
   console.log(cell);
   var client = cell.originalTarget.textContent.toLowerCase();
   table.setData(apiUrl+"/prefixes/totals?client-id=" + client,{}, ajaxConfig);
-  ga('send', {
+  ga("send", {
     hitType: 'event',
     eventCategory: 'stats',
     eventAction: 'filterClient',
@@ -38,16 +38,10 @@ function goToPrefixes(cell) {
   });  
 }
 
-function FindTaskById(task) {
-
-  if (task.id === this[0]) {
-      return task;
-  }
-}
 
 function getCsv(){
   table.download("csv", "data.csv");
-  ga('send', {
+  ga("send", {
     hitType: 'event',
     eventCategory: 'stats',
     eventAction: 'download',
@@ -65,9 +59,9 @@ var table = new Tabulator("#doi-production-table", {
     var myList2 = response.map(function(element) {
       console.log(element.states);
       if(element.states == null) {
-        var findable = {"count":"0"}
-        var registered = {"count":"0"}
-        var draft = {"count":"0"}
+        var findable = {"count":"0"};
+        var registered = {"count":"0"};
+        var draft = {"count":"0"};
       }else{
         var findable = element.states.find(FindTaskById,['findable']);
         var registered = element.states.find(FindTaskById,['registered']);
@@ -75,9 +69,9 @@ var table = new Tabulator("#doi-production-table", {
       }
 
       if(element.temporal == null) {
-        var this_year = {"count":"0"}
-        var last_year = {"count":"0"}
-        var this_month = {"count":"0"}
+        var this_year = {"count":"0"};
+        var last_year = {"count":"0"};
+        var this_month = {"count":"0"};
       } else{
         var this_year = ( element.temporal.this_year == null) ? {"count":"0"} : element.temporal.this_year[0];
         var last_year = ( element.temporal.last_year == null) ? {"count":"0"} : element.temporal.last_year[0];
@@ -118,7 +112,7 @@ var table = new Tabulator("#doi-production-table", {
       {title:"Registered", field:"registered", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
       {title:"Draft", field:"draft", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
   ]}
-  ]},
+  ]}
 );
 
 table.setData(apiUrl + "/providers/totals",{}, ajaxConfig);
