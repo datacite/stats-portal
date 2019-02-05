@@ -4,20 +4,20 @@ require 'middleman-core/load_paths'
 require 'middleman-core'
 require 'middleman-core/rack'
 
-require 'fileutils'
-FileUtils.mkdir('log') unless File.exist?('log')
-::Middleman::Logger.singleton("log/#{ENV['RACK_ENV']}.log")
-
-app = ::Middleman::Application.new
-
 require 'rack/cors'
 use Rack::Cors do
   allow do
     origins '*'
     resource '*',
       headers: :any,
-      methods: [:get, :post, :put, :patch, :delete, :options, :head]
+      methods: [:get, :options, :head]
   end
 end
+
+require 'fileutils'
+FileUtils.mkdir('log') unless File.exist?('log')
+::Middleman::Logger.singleton("log/#{ENV['RACK_ENV']}.log")
+
+app = ::Middleman::Application.new
 
 run ::Middleman::Rack.new(app).to_app
