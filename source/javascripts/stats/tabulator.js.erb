@@ -2,9 +2,15 @@
 
 var apiUrl = "<%= ENV['API_URL'] %>";
 
-var ajaxConfig = {
-  method:"get",
-  cache: "force-cache"
+var ajaxConfig = { 
+  method:'get',
+  mode:"cors",
+  // cache:"force-cache",
+  headers:{
+    "Access-Control-Allow-Origin":'*',
+    "Access-Control-Request-Method":'GET'
+
+  }
  };
 
 function FindTaskById(task) {
@@ -15,7 +21,6 @@ function FindTaskById(task) {
 }
 
 function goToClients(cell) {
-  console.log(cell);
   var provider = cell.originalTarget.textContent.toLowerCase();
   table.setData(apiUrl+"/clients/totals?provider-id=" + provider,{}, ajaxConfig);
   ga("send", {
@@ -27,7 +32,6 @@ function goToClients(cell) {
 }
 
 function goToPrefixes(cell) {
-  console.log(cell);
   var client = cell.originalTarget.textContent.toLowerCase();
   table.setData(apiUrl+"/prefixes/totals?client-id=" + client,{}, ajaxConfig);
   ga("send", {
@@ -49,15 +53,37 @@ function getCsv(){
   });  
 }
 
+function queryDatacite(url, config, params){
+  return new Promise(function(resolve, reject){
+    //do some async data retrieval then pass the array of row data back into Tabulator
+    $.ajax({
+      type : "GET",
+      url : url,
+      dataType : "json",
+      cache : true,
+      // async : true,
+		  success : function(data) {
+        resolve(data);
+      }
+    });
+    
 
+    //if there is an error call this function and pass the error message or object into it
+    // reject();
+});
+}
+
+var iniUrl = apiUrl + "/providers/totals";
 var table = new Tabulator("#doi-production-table", {
   responsiveLayout:true,
   layout:"fitColumns",
+  // ajaxContentType:"json",
+  ajaxURL:iniUrl,
+  ajaxRequestFunc:queryDatacite,
   placeholder:"No Data Available. API might be not working. Please check status.datacite.org.",
   ajaxResponse:function(url, params, response){
 
     var myList2 = response.map(function(element) {
-      console.log(element.states);
       if(element.states == null) {
         var findable = {"count":"0"};
         var registered = {"count":"0"};
@@ -102,18 +128,18 @@ var table = new Tabulator("#doi-production-table", {
     {title:"DOI Registrations", align:"center",
       columns:[
       {title:"Total", field:"total", sorter:"string", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
-      {title:"2019", field:"this_year", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
-      {title:"2018", field:"last_year", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
-      {title:"This month", field:"this_month", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
+      {title:"2019", field:"this_year", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
+      {title:"2018", field:"last_year", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
+      {title:"This month", field:"this_month", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
    ]},
     {title:"DOI Metadata", align:"center",
       columns:[
-      {title:"Findable", field:"findable", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
-      {title:"Registered", field:"registered", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
-      {title:"Draft", field:"draft", align:"right", formatter:"number", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
+      {title:"Findable", field:"findable", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
+      {title:"Registered", field:"registered", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
+      {title:"Draft", field:"draft", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
   ]}
   ]}
 );
 
-table.setData(apiUrl + "/providers/totals",{}, ajaxConfig);
+// table.setData(apiUrl + "/providers/totals",{}, ajaxConfig);
 table.setSort("id", "asc");
