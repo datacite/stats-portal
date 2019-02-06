@@ -1,17 +1,7 @@
 
 
 var apiUrl = "<%= ENV['API_URL'] %>";
-
-var ajaxConfig = { 
-  method:'get',
-  mode:"cors",
-  // cache:"force-cache",
-  headers:{
-    "Access-Control-Allow-Origin":'*',
-    "Access-Control-Request-Method":'GET'
-
-  }
- };
+var requestUrl = apiUrl + "/providers/totals";
 
 function FindTaskById(task) {
 
@@ -21,8 +11,8 @@ function FindTaskById(task) {
 }
 
 function goToClients(cell) {
-  var provider = cell.originalTarget.textContent.toLowerCase();
-  table.setData(apiUrl+"/clients/totals?provider-id=" + provider,{}, ajaxConfig);
+  var provider = cell.target.innerText.toLowerCase();
+  table.setData(apiUrl+"/clients/totals?provider-id=" + provider);
   ga("send", {
     hitType: 'event',
     eventCategory: 'stats',
@@ -32,8 +22,8 @@ function goToClients(cell) {
 }
 
 function goToPrefixes(cell) {
-  var client = cell.originalTarget.textContent.toLowerCase();
-  table.setData(apiUrl+"/prefixes/totals?client-id=" + client,{}, ajaxConfig);
+  var client = cell.target.innerText.toLowerCase();
+  table.setData(apiUrl+"/prefixes/totals?client-id=" + client); 
   ga("send", {
     hitType: 'event',
     eventCategory: 'stats',
@@ -54,6 +44,7 @@ function getCsv(){
 }
 
 function queryDatacite(url, config, params){
+   // there is a bug described in https://github.com/olifolkerd/tabulator/issues/1612
   return new Promise(function(resolve, reject){
     //do some async data retrieval then pass the array of row data back into Tabulator
     $.ajax({
@@ -67,18 +58,26 @@ function queryDatacite(url, config, params){
       }
     });
     
-
     //if there is an error call this function and pass the error message or object into it
     // reject();
 });
 }
 
-var iniUrl = apiUrl + "/providers/totals";
+function whichEvent(cell){
+  var current = table.getAjaxUrl();
+  console.log(current)
+  if(current.includes("clients")){
+    goToPrefixes(cell);
+  }else{
+    goToClients(cell);
+  }
+}
+
 var table = new Tabulator("#doi-production-table", {
   responsiveLayout:true,
   layout:"fitColumns",
   // ajaxContentType:"json",
-  ajaxURL:iniUrl,
+  ajaxURL:requestUrl,
   ajaxRequestFunc:queryDatacite,
   placeholder:"No Data Available. API might be not working. Please check status.datacite.org.",
   ajaxResponse:function(url, params, response){
@@ -123,7 +122,7 @@ var table = new Tabulator("#doi-production-table", {
     return myList2; 
   },
   columns:[
-    {title:"ID", field:"id", sorter:"string", cellClick:goToClients,responsive:0},
+    {title:"ID", field:"id", sorter:"string", cellClick:whichEvent,responsive:0},
     {title:"Name", field:"title", minWidth:350, responsive:0},
     {title:"DOI Registrations", align:"center",
       columns:[

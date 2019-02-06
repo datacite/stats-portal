@@ -1,7 +1,7 @@
 function displayProviders(task) {
 
   goHome();
-  table.setData(apiUrl+"/providers/totals",{}, ajaxConfig);
+  table.setData(apiUrl+"/providers/totals");
   ga('send', {
     hitType: 'event',
     eventCategory: 'stats',
@@ -12,7 +12,7 @@ function displayProviders(task) {
 
 function displayClients(task) {
   goHome();
-  table.setData(apiUrl+"/clients/totals",{}, ajaxConfig);
+  table.setData(apiUrl+"/clients/totals");
   ga('send', {
     hitType: 'event',
     eventCategory: 'stats',
@@ -23,7 +23,7 @@ function displayClients(task) {
 
 function displayPrefixes(task) {
   goHome();
-  table.setData(apiUrl+"/prefixes/totals",{}, ajaxConfig);
+  table.setData(apiUrl+"/prefixes/totals");
   ga('send', {
     hitType: 'event',
     eventCategory: 'stats',
