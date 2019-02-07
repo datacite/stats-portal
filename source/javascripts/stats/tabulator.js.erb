@@ -32,6 +32,17 @@ function goToPrefixes(cell) {
   });  
 }
 
+function goToResolutions(cell) {
+  var prefix = cell.target.innerText.toLowerCase();
+  window.location = '/resolutions.html#tab-resolution-report';
+  ga("send", {
+    hitType: 'event',
+    eventCategory: 'stats',
+    eventAction: 'filterClient',
+    eventLabel: client
+  });  
+}
+
 
 function getCsv(){
   table.download("csv", "data.csv");
@@ -47,12 +58,20 @@ function queryDatacite(url, config, params){
    // there is a bug described in https://github.com/olifolkerd/tabulator/issues/1612
   return new Promise(function(resolve, reject){
     //do some async data retrieval then pass the array of row data back into Tabulator
+    
     $.ajax({
       type : "GET",
       url : url,
-      dataType : "json",
       cache : true,
-      // async : true,
+      jsonp: false,
+      dataType : "json",
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET',
+        'Access-Control-Allow-Headers': 'Cache-Control',
+        'Cache-Control':'public, max-age=100000'
+      },
+      async : true,
 		  success : function(data) {
         resolve(data);
       }
@@ -68,7 +87,10 @@ function whichEvent(cell){
   console.log(current)
   if(current.includes("clients")){
     goToPrefixes(cell);
-  }else{
+  }else if (current.includes("prefixes")) {
+    goToResolutions(cell);
+  }
+  else{
     goToClients(cell);
   }
 }
@@ -108,7 +130,7 @@ var table = new Tabulator("#doi-production-table", {
       var draft = (typeof draft === 'undefined') ? {"count":"0"} : draft;
 
       return {"id": element.id, 
-       "title": element.title, 
+        "title": element.title, 
         "total": element.count, 
         "findable": findable.count, 
         "registered": registered.count, 
@@ -126,7 +148,7 @@ var table = new Tabulator("#doi-production-table", {
     {title:"Name", field:"title", minWidth:350, responsive:0},
     {title:"DOI Registrations", align:"center",
       columns:[
-      {title:"Total", field:"total", sorter:"string", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false,formatter:"money", thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
+      {title:"Total", field:"total", sorter:"number", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false,formatter:"money", thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
       {title:"2019", field:"this_year", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, formatter:"money",thousand:","}},
       {title:"2018", field:"last_year", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, formatter:"money",thousand:","}},
       {title:"This month", field:"this_month", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false,formatter:"money", thousand:","}},
