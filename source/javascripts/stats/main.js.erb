@@ -4,11 +4,11 @@ function init() {
 	addCustomTablesorterParser();
 	loadFilterList();
 
-	newStatsTab("", "Registrations by Allocator", initMainStats("allocator_facet"), "datacentres", "Allocator");
-	newStatsTab("", "Registrations by Datacenter", initMainStats("datacentre_facet"), "prefixes", "Datacentre");
-	newStatsTab("", "Registrations by Prefix", initMainStats("prefix"), "resolution-report", "Prefixes", {headers: { 0: { sorter:'prefixes' }}});
+	newStatsTab("allocators", "", initMainStats("allocator_facet"), "datacentres", "Allocator");
+	newStatsTab("datacentres", "", initMainStats("datacentre_facet"), "prefixes", "Datacentre");
+	newStatsTab("prefixes", "", initMainStats("prefix"), "resolution-report", "Prefixes", {headers: { 0: { sorter:'prefixes' }}});
 //	newStatsTab("link-checker", "Link Checker", initLinkChecker);
-	newStatsTab("", "Resolutions by Month", initResolutionReportList);
+	newStatsTab("resolution-report", "", initResolutionReportList);
 
 //	newStatsTab("history-year", "Annual History", initHistoryStats("+1YEAR", "per year", "%y"));
 //	newStatsTab("history-month", "Monthly History", initHistoryStats("+1MONTH", "per month", "%b %y"));
