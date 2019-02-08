@@ -97,7 +97,9 @@ function whichEvent(cell){
 var table = new Tabulator("#doi-production-table", {
   responsiveLayout:true,
   layout:"fitColumns",
-  // ajaxContentType:"json",
+  virtualDom:true,
+  virtualDomBuffer:300,
+  height:"800px",
   ajaxURL:requestUrl,
   ajaxRequestFunc:queryDatacite,
   placeholder:"No Data Available. API might be not working. Please check status.datacite.org.",
