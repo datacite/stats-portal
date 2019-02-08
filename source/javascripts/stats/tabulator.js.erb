@@ -3,6 +3,10 @@
 var apiUrl = "<%= ENV['API_URL'] %>";
 var requestUrl = apiUrl + "/providers/totals";
 
+var d = new Date();
+var thisYear = d.getFullYear();
+
+
 function FindTaskById(task) {
 
   if (task.id === this[0]) {
@@ -150,9 +154,9 @@ var table = new Tabulator("#doi-production-table", {
     {title:"DOI Registrations", align:"center",
       columns:[
       {title:"Total", field:"total",headerSortStartingDir:"desc", sorter:"number", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false,formatter:"money", thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
-      {title:"2019", field:"this_year",headerSortStartingDir:"desc", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, formatter:"money",thousand:","}},
-      {title:"2018", field:"last_year",headerSortStartingDir:"desc", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, formatter:"money",thousand:","}},
-      {title:"This month", field:"this_month", width:110, align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false,formatter:"money", thousand:","}},
+      {title:thisYear, field:"this_year",headerSortStartingDir:"desc", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, formatter:"money",thousand:","}},
+      {title:thisYear-1, field:"last_year",headerSortStartingDir:"desc", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, formatter:"money",thousand:","}},
+      {title:"This month", field:"this_month", headerSortStartingDir:"desc", width:110, align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false,formatter:"money", thousand:","}},
    ]},
     {title:"DOI Metadata", align:"center",
       columns:[
