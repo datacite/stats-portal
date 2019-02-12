@@ -170,6 +170,7 @@ function initLinkChecker(tab) {
 
 function initResolutionReportList(tab) {
 	$("a#csv").hide();
+	$("a#resolutions-tab").tab('show');
 	var list = $("<div>");
 	list.load_sync("<%= ENV['RESOLUTION_URL'] %>/index.html a");
 
