@@ -108,8 +108,9 @@ var table = new Tabulator("#doi-production-table", {
   ajaxRequestFunc:queryDatacite,
   placeholder:"No Data Available. API might be not working. Please check status.datacite.org.",
   ajaxResponse:function(url, params, response){
-
-    var myList2 = response.map(function(element) {
+    // var meta = response.meta.totals_client
+    var meta = response
+    var myList2 = meta.map(function(element) {
       if(element.states == null) {
         var findable = {"count":"0"};
         var registered = {"count":"0"};
@@ -134,7 +135,7 @@ var table = new Tabulator("#doi-production-table", {
       var registered = (typeof registered === 'undefined') ? {"count":"0"} : registered;
       var draft = (typeof draft === 'undefined') ? {"count":"0"} : draft;
 
-      return {"id": element.id, 
+      return {"id": element.id.toUpperCase(), 
         "title": element.title, 
         "total": element.count, 
         "findable": findable.count, 
@@ -149,7 +150,7 @@ var table = new Tabulator("#doi-production-table", {
     return myList2; 
   },
   columns:[
-    {title:"ID", field:"id", sorter:"string", cellClick:whichEvent,responsive:0},
+    {title:"ID", field:"id", sorter:"string",width:110, cellClick:whichEvent,responsive:0},
     {title:"Name", field:"title", minWidth:350, responsive:0},
     {title:"DOI Registrations", align:"center",
       columns:[
