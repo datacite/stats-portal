@@ -15,8 +15,14 @@ function FindTaskById(task) {
 }
 
 function goToClients(cell) {
-  var provider = cell.target.innerText.toLowerCase();
+  var provider = cell._row.data.id.toLowerCase();
   table.setData(apiUrl+"/clients/totals?provider-id=" + provider);
+  // $("#member_level")[0].href = "/";
+  $("#member_level").show();
+  $("#member_level").click(function() { table.setData(apiUrl+"/clients/totals?provider-id=" + provider)});
+  $("#member_level").text(provider.toUpperCase());
+  $("#member_level").val(provider.toUpperCase());  
+  $("#client_level").hide();
   ga("send", {
     hitType: 'event',
     eventCategory: 'stats',
@@ -26,8 +32,11 @@ function goToClients(cell) {
 }
 
 function goToPrefixes(cell) {
-  var client = cell.target.innerText.toLowerCase();
+  var client = cell._row.data.id.toLowerCase();
   table.setData(apiUrl+"/prefixes/totals?client-id=" + client); 
+  $("#client_level").show();
+  $("#client_level").text(client.toUpperCase());
+  $("#client_level").val(client.toUpperCase());  
   ga("send", {
     hitType: 'event',
     eventCategory: 'stats',
@@ -37,7 +46,7 @@ function goToPrefixes(cell) {
 }
 
 function goToResolutions(cell) {
-  var prefix = cell.target.innerText.toLowerCase();
+  var prefix = cell._row.data.id.toLowerCase();
   window.location = '/resolutions.html#tab-resolution-report';
   ga("send", {
     hitType: 'event',
@@ -85,9 +94,10 @@ function queryDatacite(url, config, params){
 });
 }
 
-function whichEvent(cell){
+function whichEvent(e, cell){
   var current = table.getAjaxUrl();
-  console.log(current)
+  console.log(current);
+  console.log(cell._row.data.id);
   if(current.includes("clients")){
     goToPrefixes(cell);
   }else if (current.includes("prefixes")) {
@@ -102,6 +112,7 @@ var table = new Tabulator("#doi-production-table", {
   responsiveLayout:true,
   layout:"fitColumns",
   virtualDom:true,
+  rowClick:whichEvent,
   virtualDomBuffer:300,
   height:"800px",
   ajaxURL:requestUrl,
@@ -150,7 +161,7 @@ var table = new Tabulator("#doi-production-table", {
     return myList2; 
   },
   columns:[
-    {title:"ID", field:"id", sorter:"string",width:110, cellClick:whichEvent,responsive:0},
+    {title:"ID", field:"id", sorter:"string",width:110,responsive:0},
     {title:"Name", field:"title", minWidth:350, responsive:0},
     {title:"DOI Registrations", align:"center",
       columns:[
@@ -170,3 +181,6 @@ var table = new Tabulator("#doi-production-table", {
 
 // table.setData(apiUrl + "/providers/totals",{}, ajaxConfig);
 table.setSort("id", "asc");
+console.log($("#member_level"));
+$("#member_level").hide();
+$("#client_level").hide();
