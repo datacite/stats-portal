@@ -17,12 +17,13 @@ function FindTaskById(task) {
 function goToClients(cell) {
   var provider = cell._row.data.id.toLowerCase();
   table.setData(apiUrl+"/clients/totals?provider-id=" + provider);
-  // $("#member_level")[0].href = "/";
   $("#member_level").show();
-  $("#member_level").click(function() { table.setData(apiUrl+"/clients/totals?provider-id=" + provider)});
+  $("#member_level").click(function() { 
+    table.setData(apiUrl+"/clients/totals?provider-id=" + provider)
+    $("li#client_level").hide();
+  });
   $("#member_level").text(provider.toUpperCase());
   $("#member_level").val(provider.toUpperCase());  
-  $("#client_level").hide();
   ga("send", {
     hitType: 'event',
     eventCategory: 'stats',
