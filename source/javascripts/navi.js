@@ -2,6 +2,8 @@ function displayProviders(task) {
 
   goHome();
   table.setData(apiUrl+"/providers/totals");
+  $("li#client_level").hide();
+  $("li#member_level").hide();
   ga('send', {
     hitType: 'event',
     eventCategory: 'stats',
@@ -13,6 +15,9 @@ function displayProviders(task) {
 function displayClients(task) {
   goHome();
   table.setData(apiUrl+"/clients/totals");
+  $("li#client_level").hide();
+  $("li#member_level").hide();
+
   ga('send', {
     hitType: 'event',
     eventCategory: 'stats',
@@ -24,6 +29,9 @@ function displayClients(task) {
 function displayPrefixes(task) {
   goHome();
   table.setData(apiUrl+"/prefixes/totals");
+  $("li#client_level").hide();
+  $("li#member_level").hide();
+
   ga('send', {
     hitType: 'event',
     eventCategory: 'stats',
