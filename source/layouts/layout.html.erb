@@ -56,12 +56,9 @@
   </head>
   <body>
     <%= partial "includes/header.html.erb" %>
-    <%= partial "includes/navi.html.erb" %>
-    <%= partial "includes/table.html.erb" %>
-    <br/>
+      <%= yield %> 
     <%= partial "includes/footer.html.erb" %>
     <%= partial "includes/javascripts.html.erb" %>
-    <% if ENV['SITE_GA'] %>
-      <%= partial "includes/google_analytics.html.erb" %>
-    <% end %>  </body>
+    <%= partial "includes/google_analytics.html.erb" %>
+  </body>
 </html>
