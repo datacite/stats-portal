@@ -60,6 +60,8 @@
     <%= yield %> 
     <%= partial "includes/footer.html.erb" %>
     <%= partial "includes/javascripts.html.erb" %>
-    <%= partial "includes/google_analytics.html.erb" %>
+    <% if ENV['SITE_GA'] %>
+      <%= partial "includes/google_analytics.html.erb" %>
+    <% end %>
   </body>
 </html>

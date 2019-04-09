@@ -3,6 +3,10 @@
 var apiUrl = "<%= ENV['API_URL'] %>";
 var requestUrl = apiUrl + "/providers/totals";
 
+var d = new Date();
+var thisYear = d.getFullYear();
+
+
 function FindTaskById(task) {
 
   if (task.id === this[0]) {
@@ -11,8 +15,15 @@ function FindTaskById(task) {
 }
 
 function goToClients(cell) {
-  var provider = cell.target.innerText.toLowerCase();
+  var provider = cell._row.data.id.toLowerCase();
   table.setData(apiUrl+"/clients/totals?provider-id=" + provider);
+  $("#member_level").show();
+  $("#member_level").click(function() { 
+    table.setData(apiUrl+"/clients/totals?provider-id=" + provider)
+    $("li#client_level").hide();
+  });
+  $("#member_level").text(provider.toUpperCase());
+  $("#member_level").val(provider.toUpperCase());  
   ga("send", {
     hitType: 'event',
     eventCategory: 'stats',
@@ -22,8 +33,11 @@ function goToClients(cell) {
 }
 
 function goToPrefixes(cell) {
-  var client = cell.target.innerText.toLowerCase();
+  var client = cell._row.data.id.toLowerCase();
   table.setData(apiUrl+"/prefixes/totals?client-id=" + client); 
+  $("#client_level").show();
+  $("#client_level").text(client.toUpperCase());
+  $("#client_level").val(client.toUpperCase());  
   ga("send", {
     hitType: 'event',
     eventCategory: 'stats',
@@ -33,7 +47,7 @@ function goToPrefixes(cell) {
 }
 
 function goToResolutions(cell) {
-  var prefix = cell.target.innerText.toLowerCase();
+  var prefix = cell._row.data.id.toLowerCase();
   window.location = '/resolutions.html#tab-resolution-report';
   ga("send", {
     hitType: 'event',
@@ -81,9 +95,10 @@ function queryDatacite(url, config, params){
 });
 }
 
-function whichEvent(cell){
+function whichEvent(e, cell){
   var current = table.getAjaxUrl();
-  console.log(current)
+  console.log(current);
+  console.log(cell._row.data.id);
   if(current.includes("clients")){
     goToPrefixes(cell);
   }else if (current.includes("prefixes")) {
@@ -97,13 +112,17 @@ function whichEvent(cell){
 var table = new Tabulator("#doi-production-table", {
   responsiveLayout:true,
   layout:"fitColumns",
-  // ajaxContentType:"json",
+  virtualDom:true,
+  rowClick:whichEvent,
+  virtualDomBuffer:300,
+  height:"800px",
   ajaxURL:requestUrl,
   ajaxRequestFunc:queryDatacite,
   placeholder:"No Data Available. API might be not working. Please check status.datacite.org.",
   ajaxResponse:function(url, params, response){
-
-    var myList2 = response.map(function(element) {
+    // var meta = response.meta.totals_client
+    var meta = response
+    var myList2 = meta.map(function(element) {
       if(element.states == null) {
         var findable = {"count":"0"};
         var registered = {"count":"0"};
@@ -128,7 +147,7 @@ var table = new Tabulator("#doi-production-table", {
       var registered = (typeof registered === 'undefined') ? {"count":"0"} : registered;
       var draft = (typeof draft === 'undefined') ? {"count":"0"} : draft;
 
-      return {"id": element.id, 
+      return {"id": element.id.toUpperCase(), 
         "title": element.title, 
         "total": element.count, 
         "findable": findable.count, 
@@ -143,19 +162,19 @@ var table = new Tabulator("#doi-production-table", {
     return myList2; 
   },
   columns:[
-    {title:"ID", field:"id", sorter:"string", cellClick:whichEvent,responsive:0},
+    {title:"ID", field:"id", sorter:"string",width:110,responsive:0},
     {title:"Name", field:"title", minWidth:350, responsive:0},
     {title:"DOI Registrations", align:"center",
       columns:[
-      {title:"Total", field:"total", sorter:"number", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false,formatter:"money", thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
-      {title:"2019", field:"this_year", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, formatter:"money",thousand:","}},
-      {title:"2018", field:"last_year", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, formatter:"money",thousand:","}},
-      {title:"This month", field:"this_month", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false,formatter:"money", thousand:","}},
+      {title:"Total", field:"total",headerSortStartingDir:"desc", sorter:"number", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false,formatter:"money", thousand:","},bottomCalcformatterParams:{precision:false, thousand:","}},
+      {title:thisYear, field:"this_year",headerSortStartingDir:"desc", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, formatter:"money",thousand:","}},
+      {title:thisYear-1, field:"last_year",headerSortStartingDir:"desc", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, formatter:"money",thousand:","}},
+      {title:"This month", field:"this_month", headerSortStartingDir:"desc", width:110, align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false,formatter:"money", thousand:","}},
    ]},
     {title:"DOI Metadata", align:"center",
       columns:[
-      {title:"Findable", field:"findable", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, formatter:"money",thousand:","}},
-      {title:"Registered", field:"registered", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, formatter:"money",thousand:","}},
+      {title:"Findable", field:"findable",headerSortStartingDir:"desc", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, formatter:"money",thousand:","}},
+      {title:"Registered", field:"registered",width:110, align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, formatter:"money",thousand:","}},
       {title:"Draft", field:"draft", align:"right", formatter:"money", bottomCalc:"sum",formatterParams:{precision:false, thousand:","},bottomCalcformatterParams:{precision:false, formatter:"money",thousand:","}},
   ]}
   ]}
@@ -163,3 +182,6 @@ var table = new Tabulator("#doi-production-table", {
 
 // table.setData(apiUrl + "/providers/totals",{}, ajaxConfig);
 table.setSort("id", "asc");
+console.log($("#member_level"));
+$("#member_level").hide();
+$("#client_level").hide();
