@@ -31,11 +31,7 @@ function addCustomTablesorterParser() {
 }
 
 function loadFilterList() {
-	// $("#filters").load_sync("proxy/search/list/filters-html" + window.location.search, function() {
-	$("#filters").load_sync("<%= ENV['SOLR_URL'] %>/list/filters-html" + window.location.search, function() {
-		$(this).toggle($(".filter", this).size() > 0);
-		setNextLinkForFilterList();
-	});
+
 }
 
 function setNextLinkForFilterList() {
