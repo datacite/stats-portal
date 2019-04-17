@@ -262,21 +262,16 @@ $.fn.setLinksToNextTab = function(next_tab) {
 
 $.fn.applyFilters = function (filters) {
 	var table = $(this);
-	$("#filters .filter").each(function() {
-		var name = $.trim($(".name", this).text());
-		var val = $.trim($(".value", this).text());
 
-		if (name == "allocator" && filters.allocator) {
-			var symbol = val.split(" ")[0];
-			table.filterRows(function() { return filters.allocator(this, symbol) });
-		} else if (name == "datacentre" && filters.datacentre) {
-			var symbol = val.split(" ")[0];
-			table.filterRows(function() { return filters.datacentre(this, symbol) });
-		} else if (name == "prefix") {
-			var prefix = val;
-			table.filterRows(function() { return filters.prefix(this, prefix) });
-		}
-	});
+	var url_string = $(location).attr('href')
+	var url = new URL(url_string);
+	var prefix = url.searchParams.get("prefix");
+	var val = prefix;
+
+	if (prefix) {
+		var prefix = val;
+		table.filterRows(function() { return filters.prefix(this, prefix) });
+	}
 }
 
 $.fn.setTargetForExternalLinks = function() {

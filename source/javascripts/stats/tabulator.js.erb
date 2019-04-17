@@ -48,7 +48,7 @@ function goToPrefixes(cell) {
 
 function goToResolutions(cell) {
   var prefix = cell._row.data.id.toLowerCase();
-  window.location = '/resolutions.html#tab-resolution-report';
+  window.location = '/resolutions.html?prefix='+prefix+'#tab-resolution-report';
   ga("send", {
     hitType: 'event',
     eventCategory: 'stats',
