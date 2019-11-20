@@ -122,7 +122,8 @@ GEM
     parallel (1.17.0)
     public_suffix (3.1.0)
     rack (2.0.7)
-    rack-cors (1.0.3)
+    rack-cors (1.0.5)
+      rack (>= 1.6.0)
     rack-livereload (0.3.17)
       rack
     rack-test (0.6.3)
@@ -157,7 +158,7 @@ DEPENDENCIES
   middleman-livereload
   middleman-sprockets (~> 4.1.0)
   pandoc-ruby (~> 2.0)
-  rack-cors (~> 1.0, >= 1.0.2)
+  rack-cors (~> 1.0)
   tilt (~> 2.0)!
   tzinfo-data
   wdm (~> 0.1.0)
