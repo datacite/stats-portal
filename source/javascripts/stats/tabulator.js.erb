@@ -97,8 +97,6 @@ function queryDatacite(url, config, params){
 
 function whichEvent(e, cell){
   var current = table.getAjaxUrl();
-  console.log(current);
-  console.log(cell._row.data.id);
   if(current.includes("clients")){
     goToPrefixes(cell);
   }else if (current.includes("prefixes")) {
@@ -177,6 +175,5 @@ var table = new Tabulator("#doi-production-table", {
 
 // table.setData(apiUrl + "/providers/totals",{}, ajaxConfig);
 table.setSort("id", "asc");
-console.log($("#member_level"));
 $("#member_level").hide();
 $("#client_level").hide();
