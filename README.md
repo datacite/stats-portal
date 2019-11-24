@@ -1,7 +1,9 @@
+[![Build Status](https://travis-ci.org/datacite/stats-portal.svg?branch=master)](https://travis-ci.org/datacite/stats-portal)
+
 # DataCite Statistics Portal
 
 Static website for DataCite summary statistics. This website provides summary
-statistics from all data centers that use DataCite DOIs. It includes DOIs
+statistics from all members and repositories that use DataCite DOIs. It includes DOIs
 registration and resolution.
 
 ## Installation
