@@ -31,4 +31,4 @@ go to http://localhost:4567
 
 ## License
 
-**Lupo** is released under the [MIT License](https://github.com/datacite/stats-portal/master/LICENSE.md).
+**Lupo** is released under the [MIT License](https://github.com/datacite/stats-portal/blob/master/LICENSE.md).
