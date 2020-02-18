@@ -14,10 +14,10 @@ function displayProviders(task) {
 
 function displayClients(task) {
   goHome();
-  table.setData(apiUrl+"/clients/totals");
+  table.setData([]);
+  $(".tabulator-placeholder")[0].children[0].innerText = "Too many repositories to show, Please nagivate to your repository from the Member Tab."
   $("li#client_level").hide();
   $("li#member_level").hide();
-
   ga('send', {
     hitType: 'event',
     eventCategory: 'stats',
