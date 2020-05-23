@@ -41,6 +41,17 @@ helpers do
   def stage?
     ENV['RACK_ENV'] == "stage"
   end
+
+  def resolutions_array
+     files = Dir["./source/stats/resolution-report/resolutions*.html"].map do |file| 
+       { date: Date.strptime("#{file[-9..-6]}-#{file[-12..-11]}-01",'%Y-%m-%d'),  
+           name: file[-24..-1],
+           month: Date::MONTHNAMES[file[-12..-11].to_i],
+           year: file[-9..-6],
+        }
+     end
+     files.sort_by { |file| file[:date] }
+  end
 end
 
 # Build-specific configuration
