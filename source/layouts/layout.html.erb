@@ -38,8 +38,10 @@
     <meta property="og:type" content="blog" />
 
     <link href='//fonts.googleapis.com/css?family=Raleway:400,600,400italic,600italic&subset=all' rel='stylesheet' type='text/css'>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" rel="stylesheet" type='text/css'>
-
+    <link 
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" 
+      integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" 
+      rel="stylesheet" crossorigin="anonymous" />
     <link href="/stylesheets/jquery-ui-1.8.18.custom.css" rel="stylesheet" />
     <link href="/stylesheets/tablesorter/style.css" rel="stylesheet" />
 
@@ -54,7 +56,5 @@
     <br/>
     <%= partial "includes/footer.html.erb" %>
     <%= partial "includes/javascripts.html.erb" %>
-    <% if ENV['SITE_GA'] %>
-      <%= partial "includes/google_analytics.html.erb" %>
-    <% end %>  </body>
+  </body>
 </html>

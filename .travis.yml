@@ -1,7 +1,7 @@
 language: ruby
 cache: bundler
 rvm:
-  - 2.3.1
+  - 2.6.5
 sudo: required
 
 before_install:
@@ -20,7 +20,7 @@ before_install:
     else
       AUTO_DEPLOY=false;
     fi
-  - gem install bundler
+  - gem install bundler:1.17.3
 
   - wget https://github.com/jgm/pandoc/releases/download/1.15.2/pandoc-1.15.2-1-amd64.deb
   - sudo dpkg -i pandoc-1.15.2-1-amd64.deb
