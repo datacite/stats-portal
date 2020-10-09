@@ -31,7 +31,7 @@ install:
   - sudo pip install awscli
 
 script:
-  - bundle exec middleman build -e $RACK_ENV  --verbose --bail
+  - bundle exec middleman build -e $RACK_ENV  --verbose --clean
   # - bundle exec htmlproofer --http-status-ignore "999" --url-ignore "#" ./build
 
 deploy:
