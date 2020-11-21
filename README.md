@@ -1,9 +1,9 @@
-[![Build Status](https://travis-ci.org/datacite/stats-portal.svg?branch=master)](https://travis-ci.org/datacite/stats-portal)
+![Release](https://github.com/datacite/stats-portal/workflows/Release/badge.svg)
 
 # DataCite Statistics Portal
 
 Static website for DataCite summary statistics. This website provides summary
-statistics from all members and repositories that use DataCite DOIs. It includes DOIs
+statistics from all members and repositories that use DataCite DOIs. It includes DOI
 registration and resolution.
 
 ## Installation
