@@ -19,7 +19,7 @@ jobs:
         with:
           ruby-version: '2.6'
 
-      - name: Build and test
+      - name: Build
         run: |
           cp $ENV_FILE .env
           gem install bundler -v 1.17.3
