@@ -3,7 +3,8 @@
 .env.*
 !.env.example
 !.env.travis
-!.env.master
+!.env.production
+!.env.stage
 # Ignore bundler config
 /.bundle
 
