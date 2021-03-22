@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.7](https://github.com/datacite/stats-portal/tree/2.1.7) (2021-02-08)
+
+[Full Changelog](https://github.com/datacite/stats-portal/compare/2.1.6...2.1.7)
+
+**Merged pull requests:**
+
+- nov-dec 2020 resolution stats [\#56](https://github.com/datacite/stats-portal/pull/56) ([kjgarza](https://github.com/kjgarza))
+
 ## [2.1.6](https://github.com/datacite/stats-portal/tree/2.1.6) (2020-11-21)
 
 [Full Changelog](https://github.com/datacite/stats-portal/compare/2.1.5...2.1.6)
