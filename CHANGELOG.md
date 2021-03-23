@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.1.8](https://github.com/datacite/stats-portal/tree/2.1.8) (2021-03-23)
+
+[Full Changelog](https://github.com/datacite/stats-portal/compare/2.1.7...2.1.8)
+
 ## [2.1.7](https://github.com/datacite/stats-portal/tree/2.1.7) (2021-02-08)
 
 [Full Changelog](https://github.com/datacite/stats-portal/compare/2.1.6...2.1.7)
@@ -188,19 +192,19 @@
 
 ## [2.0.11](https://github.com/datacite/stats-portal/tree/2.0.11) (2019-04-28)
 
-[Full Changelog](https://github.com/datacite/stats-portal/compare/2.0.10...2.0.11)
+[Full Changelog](https://github.com/datacite/stats-portal/compare/2.0.9...2.0.11)
 
 **Closed issues:**
 
 - february 2019 stats [\#31](https://github.com/datacite/stats-portal/issues/31)
 
-## [2.0.10](https://github.com/datacite/stats-portal/tree/2.0.10) (2019-04-17)
-
-[Full Changelog](https://github.com/datacite/stats-portal/compare/2.0.9...2.0.10)
-
 ## [2.0.9](https://github.com/datacite/stats-portal/tree/2.0.9) (2019-04-17)
 
-[Full Changelog](https://github.com/datacite/stats-portal/compare/2.0.8...2.0.9)
+[Full Changelog](https://github.com/datacite/stats-portal/compare/2.0.10...2.0.9)
+
+## [2.0.10](https://github.com/datacite/stats-portal/tree/2.0.10) (2019-04-17)
+
+[Full Changelog](https://github.com/datacite/stats-portal/compare/2.0.8...2.0.10)
 
 **Closed issues:**
 
