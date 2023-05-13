@@ -1,4 +1,5 @@
 .DS_Store
+_.DS_Store
 .env
 .env.*
 !.env.example
@@ -8,8 +9,13 @@
 # Ignore bundler config
 /.bundle
 
-# Ignore the build directory
+# Ignore the build directory and files
 /build
+
+# Ignore build dependencies
+/node_modules/
+/vendor/bundle/*
+pandoc-*
 
 # Ignore cache
 /.sass-cache

@@ -31,7 +31,7 @@ set :markdown, smartypants: true
 # Helpers
 ###
 
-# use asset host
+# use asset host - we don't hash assets
 # activate :asset_host, host: ENV['CDN_URL']
 
 activate :dotenv
