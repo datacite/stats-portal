@@ -1,0 +1,8 @@
+nohup: ignoring input
+Tue 26 May 2026 02:31:33 PM EDT
+napavalley.rb: warning: argument of top-level return is ignored
+<internal:/usr/share/rvm/rubies/ruby-3.2.10/lib/ruby/3.2.0/rubygems/core_ext/kernel_require.rb>:86:in `require': cannot load such file -- dotenv/load (LoadError)
+	from <internal:/usr/share/rvm/rubies/ruby-3.2.10/lib/ruby/3.2.0/rubygems/core_ext/kernel_require.rb>:86:in `require'
+	from napavalley.rb:2:in `<main>'
+Tue 26 May 2026 02:31:34 PM EDT
+STATS PROCESSING HAS FINISHED FOR: APRIL 2026
